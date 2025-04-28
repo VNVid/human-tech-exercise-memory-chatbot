@@ -19,6 +19,4 @@ OPENAI_BASE_URL = "http://localhost:8000/v1/"
 OPENAI_API_KEY = "-"
 
 SYSTEM_PROMPT_VERSION = "no_pref_v1"
-
-
-# SYSTEM_PROMPT = "You are a helpful assistant willing to find solution to users problems and explain how and why this would help."
+EXTRACT_PREF_PROMPT_VERSION = "v2"

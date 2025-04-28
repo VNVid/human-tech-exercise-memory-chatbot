@@ -22,8 +22,7 @@ def leave_session():
     return {
         login_section: gr.Column(visible=True),
         chatbot_section: gr.Column(visible=False),
-        name_input: gr.Textbox(value=""),
-        surname_input: gr.Textbox(value=""),
+        username_input: gr.Textbox(value=""),
         chat.chatbot_value: []
     }
 

@@ -3,7 +3,7 @@ from langchain_core.messages import HumanMessage, AIMessage, SystemMessage, Base
 from config import USE_BACKEND, SYSTEM_PROMPT_VERSION
 from llm.ollama_backend import OllamaChat
 from llm.openai_backend import OpenAIChat
-from core.preference_extractor import extract_preferences
+from core.preference_manager import PreferenceManager
 from core.prompt_manager import PromptManager
 
 # Session chat history
@@ -22,6 +22,7 @@ def get_llm():
 
 llm_instance = get_llm()
 prompt_mgr = PromptManager()
+pref_mgr = PreferenceManager(llm_instance)
 
 
 def get_session_id(user_info: dict) -> str:
@@ -45,11 +46,13 @@ def reset_chat_history(user_info: dict):
     chat_history.clear()
 
 
-def generate_chat_response(message: str, user_info: dict) -> str:
-    # Extract preferences
-    preferences = extract_preferences(llm_instance, chat_history, message)
+def generate_chat_response(user_msg: str, user_info: dict) -> str:
+    username = get_session_id(user_info)
 
-    chat_history.append(HumanMessage(content=message))
+    # Extract and update preferences, get combined preferences
+    preferences = pref_mgr.process(username, chat_history, user_msg)
+
+    chat_history.append(HumanMessage(content=user_msg))
     response = llm_instance.generate_response(chat_history)
 
     chat_history.append(AIMessage(content=response))
