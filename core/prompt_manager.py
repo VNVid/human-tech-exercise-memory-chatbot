@@ -2,6 +2,13 @@ import os
 
 
 class PromptManager:
+    """
+    A utility class for managing and loading prompt files organized in a directory structure.
+
+    Attributes:
+        base_dir (str): The base directory where prompt files (and possible subdirectories) are stored.
+    """
+
     def __init__(self, base_dir: str = "prompts"):
         self.base_dir = base_dir
 
