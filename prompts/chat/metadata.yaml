@@ -1,0 +1,6 @@
+chat:
+  description: General-purpose conversational prompt for the assistant
+  versions:
+    - version: no_pref_v1
+      notes: "Initial version with basic exercise assistant behavior and NO explanation preferences considered."
+    

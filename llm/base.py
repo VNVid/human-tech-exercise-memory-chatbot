@@ -5,5 +5,5 @@ from langchain_core.messages import BaseMessage
 
 class BaseLLM(ABC):
     @abstractmethod
-    def generate_response(self, message: str, messages: List[BaseMessage]) -> str:
+    def generate_response(self, messages: List[BaseMessage]) -> str:
         pass

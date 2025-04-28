@@ -1,13 +1,13 @@
 import gradio as gr
 from core.chat_engine import init_chat_history, reset_chat_history, generate_chat_response
 
-user_info = {"name": "", "surname": ""}
+user_info = {"username": ""}
 
 
-def login(name, surname):
-    if name and surname:
-        user_info["name"] = name
-        user_info["surname"] = surname
+def login(username):
+    if username:
+        user_info["username"] = username
+
         init_chat_history(user_info)
         return {
             login_section: gr.Column(visible=False),
@@ -18,8 +18,7 @@ def login(name, surname):
 
 def leave_session():
     reset_chat_history(user_info)
-    user_info["name"] = ""
-    user_info["surname"] = ""
+    user_info["username"] = ""
     return {
         login_section: gr.Column(visible=True),
         chatbot_section: gr.Column(visible=False),
@@ -36,9 +35,8 @@ def response(message, history):
 with gr.Blocks() as demo:
     with gr.Column(visible=True) as login_section:
         gr.Markdown("## Enter your details to start the chatbot")
-        name_input = gr.Textbox(placeholder="Enter your name", label="Name")
-        surname_input = gr.Textbox(
-            placeholder="Enter your surname", label="Surname")
+        username_input = gr.Textbox(
+            placeholder="Enter your username", label="Username")
         submit_button = gr.Button("Submit")
 
     with gr.Column(visible=False) as chatbot_section:
@@ -56,7 +54,7 @@ with gr.Blocks() as demo:
             gr.Column()
             leave_button = gr.Button("Leave", variant='stop')
 
-    submit_button.click(login, [name_input, surname_input], [
+    submit_button.click(login, [username_input], [
                         login_section, chatbot_section])
     leave_button.click(leave_session, inputs=[], outputs=[
-                       login_section, chatbot_section, name_input, surname_input, chat.chatbot_value])
+                       login_section, chatbot_section, username_input, chat.chatbot_value])

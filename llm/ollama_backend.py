@@ -8,7 +8,7 @@ class OllamaChat(BaseLLM):
     def __init__(self):
         self.llm = OllamaLLM(model=MODEL_NAME, base_url=OLLAMA_URL)
 
-    def generate_response(self, message: str, messages: list[BaseMessage]) -> str:
+    def generate_response(self, messages: list[BaseMessage]) -> str:
         response = self.llm.invoke(messages)
 
         return response

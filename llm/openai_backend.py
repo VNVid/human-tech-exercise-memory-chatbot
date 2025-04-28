@@ -13,7 +13,7 @@ class OpenAIChat(BaseLLM):
             temperature=MODEL_TEMPERATURE
         )
 
-    def generate_response(self, message: str, messages: list[BaseMessage]) -> str:
+    def generate_response(self, messages: list[BaseMessage]) -> str:
         response = self.llm.invoke(messages)
 
         return response.content

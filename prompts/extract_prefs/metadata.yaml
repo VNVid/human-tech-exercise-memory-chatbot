@@ -1,0 +1,17 @@
+extraction:
+  description: Used to extract explanation preferences from user messages
+  versions:
+    - version: 1.0
+      notes: "Baseline with basic instructions and examples of preferences."
+
+    - version: 2.0
+      notes: |
+        Switched to a more schema-oriented format with JSON output, separate reasoning field 
+        and detailed step by step task description.
+        Without explanation features examples.
+    
+    - version: 3.0
+      notes: |
+        Schema-oriented format with JSON output, separate reasoning field 
+        and detailed step by step task description as in v2.
+        Explanation features examples added.
