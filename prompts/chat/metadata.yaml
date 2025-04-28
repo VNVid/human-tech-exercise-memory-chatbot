@@ -3,4 +3,10 @@ chat:
   versions:
     - version: no_pref_v1
       notes: "Initial version with basic exercise assistant behavior and NO explanation preferences considered."
+    - version: no_pref_v1.1
+      notes: |
+        Improved version with more detailed assistant role description. 
+        Still no personalization based on user explanation preferences.
     
+    - version: v2
+      notes: "Version introducing personalization"

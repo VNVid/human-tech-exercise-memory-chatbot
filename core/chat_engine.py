@@ -52,7 +52,23 @@ def generate_chat_response(user_msg: str, user_info: dict) -> str:
     # Extract and update preferences, get combined preferences
     preferences = pref_mgr.process(username, chat_history, user_msg)
 
+    # Find any existing “User preferences:” message
+    pref_msg_found = False
+    for idx, msg in enumerate(chat_history):
+        if isinstance(msg, SystemMessage) and msg.content.startswith("User preferences:"):
+            chat_history[idx] = SystemMessage(
+                content=f"User preferences: {preferences}"
+            )
+            pref_msg_found = True
+            break
+    if not pref_msg_found:
+        # Insert it right after general SYSTEM_PROMPT
+        chat_history.insert(1, SystemMessage(
+            content=f"User preferences: {preferences}"
+        ))
+
     chat_history.append(HumanMessage(content=user_msg))
+    print(chat_history)
     response = llm_instance.generate_response(chat_history)
 
     chat_history.append(AIMessage(content=response))
