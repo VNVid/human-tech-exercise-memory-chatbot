@@ -5,12 +5,16 @@ from llm.ollama_backend import OllamaChat
 from llm.openai_backend import OpenAIChat
 from core.preference_manager import PreferenceManager
 from core.prompt_manager import PromptManager
+from core.logger import Logger
 
 # Session chat history
 chat_history = []
-
+# Session logger
+logger = None
 
 # LLM backend selection
+
+
 def get_llm():
     if USE_BACKEND == "ollama":
         return OllamaChat()
@@ -32,10 +36,11 @@ def get_session_id(user_info: dict) -> str:
 def init_chat_history(user_info: dict):
     session_id = get_session_id(user_info)
 
-    global chat_history
+    global chat_history, logger
     if not chat_history:
         SYSTEM_PROMPT = prompt_mgr.load("chat", version=SYSTEM_PROMPT_VERSION)
         chat_history.append(SystemMessage(content=SYSTEM_PROMPT))
+        logger = Logger(session_id)
 
 
 def reset_chat_history(user_info: dict):
@@ -45,12 +50,15 @@ def reset_chat_history(user_info: dict):
 
     chat_history.clear()
 
+    logger = None
+
 
 def generate_chat_response(user_msg: str, user_info: dict) -> str:
     username = get_session_id(user_info)
 
     # Extract and update preferences, get combined preferences
-    preferences = pref_mgr.process(username, chat_history, user_msg)
+    raw, new_prefs, preferences = pref_mgr.process(
+        username, chat_history, user_msg)
 
     # Find any existing “User preferences:” message
     pref_msg_found = False
@@ -72,5 +80,15 @@ def generate_chat_response(user_msg: str, user_info: dict) -> str:
     response = llm_instance.generate_response(chat_history)
 
     chat_history.append(AIMessage(content=response))
+
+    # Log this turn
+    if logger:
+        logger.log_turn({
+            "user_message": user_msg,
+            "raw_extraction": raw,
+            "new_preferences": new_prefs,
+            "combined_preferences": preferences,
+            "ai_response": response
+        })
 
     return response

@@ -162,7 +162,7 @@ class PreferenceManager:
 
         return combined
 
-    def process(self, username: str, chat_history: List[BaseMessage], last_user_message: str) -> List[str]:
+    def process(self, username: str, chat_history: List[BaseMessage], last_user_message: str):
         """
         Main entry point for preference extraction and memory update during a chat session.
         It should be called by the chat engine at each user turn to keep memory updated.
@@ -176,7 +176,7 @@ class PreferenceManager:
             last_user_message: The last message sent by the user.
 
         Returns:
-            The updated list of user preferences.
+            Tuple of raw LLM output, list of new preferences and the updated list of user preferences.
         """
 
         raw = self.extract_preferences_raw(chat_history, last_user_message)
@@ -187,4 +187,4 @@ class PreferenceManager:
         print("\nNEW PREFERENCES: \n", new_prefs)
         print("\COMBINED PREFERENCES: \n", combined)
 
-        return combined
+        return raw, new_prefs, combined
