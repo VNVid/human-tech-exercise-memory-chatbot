@@ -7,15 +7,15 @@ from langchain_core.messages import BaseMessage
 from core.prompt_manager import PromptManager
 from langchain_core.messages import HumanMessage, SystemMessage, AIMessage
 from llm.base import BaseLLM
-from config import EXTRACT_PREF_PROMPT_VERSION
+from config import EXTRACT_PREF_PROMPT_VERSION, MERGE_PREF_PROMPT_VERSION
 
 
 class PreferenceManager:
     """
     Implements the long-term memory for the chatbot.
 
-    PreferenceManager handles extracting and updating, saving, loading and injecting user 
-    preferences across conversations. It provides persistent storage per user 
+    PreferenceManager handles extracting and updating, saving, loading and injecting user
+    preferences across conversations. It provides persistent storage per user
     to enable the chatbot to remember preferences between sessions.
 
     This class represents the memory module of the project.
@@ -44,7 +44,7 @@ class PreferenceManager:
 
     def load(self, username: str) -> List[str]:
         """
-        Load a user's saved preferences from disk.
+        Load a user's saved preferences from storage.
 
         Args:
             username: The user's identifier.
@@ -69,6 +69,7 @@ class PreferenceManager:
             username: The user's identifier.
             prefs: The list of preferences to save.
         """
+
         p = self._path(username)
 
         data = {"current_preferences": prefs}
@@ -77,11 +78,10 @@ class PreferenceManager:
 
     def extract_preferences_raw(self, chat_history: List[BaseMessage], last_user_message: str) -> str:
         """
-        Run the preference extraction prompt on the conversation history 
+        Run the preference extraction prompt on the conversation history
         and returns raw response of the LLM.
 
         Args:
-            username: The user's identifier.
             chat_history: List of past conversation messages.
             last_user_message: Last user message to extract preferences from.
 
@@ -125,42 +125,97 @@ class PreferenceManager:
         raw = self.llm.generate_response(extraction_msg)
         return raw
 
-    def parse_extraction_output(self, raw: str) -> List[str]:
+    def merge_preferences_raw(
+        self, old_prefs: List[str], new_prefs: List[str]
+    ) -> str:
         """
-        Given the extractor LLM's raw string, parse the JSON under "Output: {"new_preferences": [...]}".
+        Call LLM to merge old and new preferences in one shot, explaining actions.
+
+        Args:
+            old_prefs: List of current preferences loaded from storage.
+            new_prefs: List of newly extracted preferences.
 
         Returns:
-            the list value of "new_preferences" or [].
+            LLM response as str.
         """
+
+        # Prepare merge prompt and context
+        merge_prompt = self.prompt_mgr.load(
+            "merge_prefs", version=MERGE_PREF_PROMPT_VERSION)
+
+        merge_context = (
+            f"old_preferences: {json.dumps(old_prefs, ensure_ascii=False)}\n"
+            f"new_preferences: {json.dumps(new_prefs, ensure_ascii=False)}"
+        )
+
+        # Build HumanMessage that contains instructions + context
+        merge_msg = [
+            HumanMessage(
+                content=f"{merge_prompt}\n\n{merge_context}")
+        ]
+
+        # Call the LLM merger
+        raw = self.llm.generate_response(merge_msg)
+
+        return raw
+
+    def parse_output(self, raw: str, key: str = "new_preferences") -> List[str]:
+        """
+        Given the extractor or merge LLM's raw string, parse the JSON under "Output: { key : [...]}".
+
+        Returns:
+            the list value of key or [].
+        """
+
         m = re.search(r"Output:\s*(\{.*\})", raw, flags=re.S)
+
         if not m:
             return []
         try:
             obj = json.loads(m.group(1))  # returns only the JSON part
-            return obj.get("new_preferences", []) or []
+            return obj.get(key, []) or []
         except json.JSONDecodeError:
             # If failed to parse, assume nothing new
             return []
 
-    def add_preferences(self, username: str, new_prefs: List[str]) -> List[str]:
+    def add_preferences(self, username: str, new_prefs: List[str]):
         """
-        Merge new_prefs into the user's existing list, save and return the combined list.
-        """
-        if not new_prefs:
-            return self.load(username)
+        Merge new_prefs into the user's existing list, save and return the merged list.
 
-        #         TO-DO:      deduplication            TO-DO
+        This method ensures preference memory stays consistent and efficient by:
+        - removing duplicates
+        - replacing old preferences that contradict new ones
+        - saving changes only when necessary.
+
+        It maintains an up-to-date and non-conflicting set of user preferences stored in the memory.
+
+        Args:
+            username: The user's identifier.
+            new_prefs: List of newly extracted preferences.
+
+        Returns:
+            Tuple of raw LLM output and the updated list of user preferences.
+        """
+
+        # Load existing preferences form storage
         existing = self.load(username)
-        combined = existing.copy()
+        # If there are no new preferences to merge, return existing ones
+        if not new_prefs:
+            return "", existing
 
-        for p in new_prefs:
-            if p not in combined:
-                combined.append(p)
+        # If there are no preferences in the storage yet, save and return new ones
+        if not existing:
+            self.save(username, new_prefs)
+            return "", new_prefs
 
-        if combined != existing:
-            self.save(username, combined)
+        # Merge via LLM
+        raw_merge = self.merge_preferences_raw(existing, new_prefs)
+        # Parse merged list
+        merged = self.parse_output(raw_merge, key="merged_preferences")
+        # Save resulting list in the storage
+        self.save(username, merged)
 
-        return combined
+        return raw_merge, merged
 
     def process(self, username: str, chat_history: List[BaseMessage], last_user_message: str):
         """
@@ -176,15 +231,20 @@ class PreferenceManager:
             last_user_message: The last message sent by the user.
 
         Returns:
-            Tuple of raw LLM output, list of new preferences and the updated list of user preferences.
+            Tuple of raw LLM extraction output, list of new preferences, raw LLM merge output and 
+            the updated list of user preferences.
         """
 
+        # Extract via LLM
         raw = self.extract_preferences_raw(chat_history, last_user_message)
-        new_prefs = self.parse_extraction_output(raw)
-        combined = self.add_preferences(username, new_prefs)
+        # Parse extracted list
+        new_prefs = self.parse_output(raw)
+        # Merge new preferences with older ones
+        raw_merged, merged = self.add_preferences(username, new_prefs)
 
         print("EXTRACTOR RESPONSE: \n", raw)
-        print("\nNEW PREFERENCES: \n", new_prefs)
-        print("\COMBINED PREFERENCES: \n", combined)
+        print("\n NEW PREFERENCES: \n", new_prefs)
+        print("\n MERGE RESPONSE: \n", raw_merged)
+        print("\n MERGED PREFERENCES: \n", merged)
 
-        return raw, new_prefs, combined
+        return raw, new_prefs, raw_merged, merged

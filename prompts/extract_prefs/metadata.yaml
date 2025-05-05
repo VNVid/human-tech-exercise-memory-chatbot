@@ -9,9 +9,15 @@ extraction:
         Switched to a more schema-oriented format with JSON output, separate reasoning field 
         and detailed step by step task description.
         Without explanation features examples.
+    - version: 2.1
+      notes: |
+        Added instructions to express each preference individually as a separate string.
     
     - version: 3.0
       notes: |
         Schema-oriented format with JSON output, separate reasoning field 
         and detailed step by step task description as in v2.
         Explanation features examples added.
+    - version: 3.1
+      notes: |
+        Added instructions to express each preference individually as a separate string.

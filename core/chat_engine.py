@@ -1,6 +1,6 @@
 from typing import List
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage, BaseMessage
-from config import USE_BACKEND, SYSTEM_PROMPT_VERSION
+from config import USE_BACKEND, SYSTEM_PROMPT_VERSION, EXTRACT_PREF_PROMPT_VERSION, MERGE_PREF_PROMPT_VERSION
 from llm.ollama_backend import OllamaChat
 from llm.openai_backend import OpenAIChat
 from core.preference_manager import PreferenceManager
@@ -57,7 +57,7 @@ def generate_chat_response(user_msg: str, user_info: dict) -> str:
     username = get_session_id(user_info)
 
     # Extract and update preferences, get combined preferences
-    raw, new_prefs, preferences = pref_mgr.process(
+    raw_extract, new_prefs, raw_merge, preferences = pref_mgr.process(
         username, chat_history, user_msg)
 
     # Find any existing “User preferences:” message
@@ -76,7 +76,7 @@ def generate_chat_response(user_msg: str, user_info: dict) -> str:
         ))
 
     chat_history.append(HumanMessage(content=user_msg))
-    print(chat_history)
+
     response = llm_instance.generate_response(chat_history)
 
     chat_history.append(AIMessage(content=response))
@@ -84,10 +84,14 @@ def generate_chat_response(user_msg: str, user_info: dict) -> str:
     # Log this turn
     if logger:
         logger.log_turn({
+            "SYSTEM_PROMPT_VERSION": SYSTEM_PROMPT_VERSION,
+            "EXTRACT_PREF_PROMPT_VERSION": EXTRACT_PREF_PROMPT_VERSION,
+            "MERGE_PREF_PROMPT_VERSION": MERGE_PREF_PROMPT_VERSION,
             "user_message": user_msg,
-            "raw_extraction": raw,
+            "raw_extraction": raw_extract,
             "new_preferences": new_prefs,
-            "combined_preferences": preferences,
+            "raw_merge": raw_merge,
+            "merged_preferences": preferences,
             "ai_response": response
         })
 

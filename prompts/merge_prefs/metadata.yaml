@@ -1,0 +1,15 @@
+extraction:
+  description: Used to merge stored explanation preferences with newly extracted ones.
+  versions:
+    - version: 1.0
+      notes: |
+        Initial prompt: single‐shot LLM prompt that deduplicates, replaces
+        contradictory entries, preserves independent ones, and outputs JSON.
+
+    - version: 2.0
+      notes: |
+        Clarified instructions to strictly follow the required output format.
+    - version: 2.1
+      notes: |
+        Even stricter requirement to follow the output format and added guidance
+        on what to avoid when generating the output.
