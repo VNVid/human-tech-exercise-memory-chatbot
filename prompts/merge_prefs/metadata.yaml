@@ -13,3 +13,24 @@ extraction:
       notes: |
         Even stricter requirement to follow the output format and added guidance
         on what to avoid when generating the output.
+
+    - version: 3.0
+      notes: |
+        Making examples less ambiguous to avoid hallucinations with them. Refining instructions
+        to make model reason logically and to make it understand the merging task correctly.
+    - version: 3.1
+      notes: |
+        Adding instruction to strictly follow the rules. Structuring the rules as a list.
+
+    - version: 4.0
+      notes: |
+        Reformulating instructions, keeping only the essential rules. Avoiding any examples 
+        in order not to mislead the model.
+    - version: 4.1
+      notes: |
+        Adding instruction to keep compatible preferences.
+        Adding more requirements for the reasoning part, instruction the model to be concise, 
+        logically consistent and avoid repetitions.
+    - version: 4.2
+      notes: |
+        Ordering rules and highlighting that dropping of preferences is allowed only in two cases.

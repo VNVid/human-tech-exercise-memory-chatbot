@@ -1,0 +1,21 @@
+{
+  "SYSTEM_PROMPT_VERSION": "v2",
+  "EXTRACT_PREF_PROMPT_VERSION": "v2.2",
+  "MERGE_PREF_PROMPT_VERSION": "v4.2",
+  "user_message": "I want to try more exercises, but I don’t want too much info this time. Just give me 2 best ones for posture.",
+  "raw_extraction": "Reasoning:\n1. I will read the 'last_user_message' to understand the user's request.\n2. The user wants to try more exercises, which implies they want to see more content.\n3. However, they also mention they don't want too much info this time, which suggests they want to limit the amount of content they see.\n4. They specifically ask for the \"2 best ones for posture,\" which implies they want to see a curated selection of exercises.\n5. From this, I can infer that the user wants concise explanations that focus on the most relevant information.\n\nOutput: {\"new_preferences\": [\"more concise\", \"curated selection\", \"limited amount of content\"]}",
+  "new_preferences": [
+    "more concise",
+    "curated selection",
+    "limited amount of content"
+  ],
+  "raw_merge": "Reasoning:\n1. Compare old_preferences and new_preferences to identify any contradictions, refinements, or compatible preferences.\n2. Identify any duplicate preferences and remove them from the final list.\n3. Determine which preferences are more specific or refined versions of others and keep the more specific ones.\n4. Keep all other preferences as they are compatible.\n\nOld preferences: [\"medically accurate explanations\", \"more detail\", \"formal tone\", \"academic evidence\", \"send in a small paragraph\"]\nNew preferences: [\"more concise\", \"curated selection\", \"limited amount of content\"]\n\n- \"medically accurate explanations\" and \"more concise\" are contradictory as they refer to the same concept but express opposite values. Keep \"more concise\" and remove \"medically accurate explanations\".\n- \"more detail\" and \"limited amount of content\" are also contradictory as they refer to the same concept but express opposite values. Keep \"limited amount of content\" and remove \"more detail\".\n- \"formal tone\" and \"curated selection\" relate to the same concept but \"curated selection\" is a more specific version. Keep \"curated selection\" and remove \"formal tone\".\n- \"academic evidence\" and \"curated selection\" relate to the same concept but \"curated selection\" is a more specific version. Keep \"curated selection\" and remove \"academic evidence\".\n- \"send in a small paragraph\" and \"limited amount of content\" relate to the same concept but \"limited amount of content\" is a more specific version. Keep \"limited amount of content\" and remove \"send in a small paragraph\".\n\nThe final merged list is:\n- \"more concise\"\n- \"curated selection\"\n- \"limited amount of content\"\n\nOutput: {\"merged_preferences\": [\"more concise\", \"curated selection\", \"limited amount of content\"]}",
+  "merged_preferences": [
+    "more concise",
+    "curated selection",
+    "limited amount of content"
+  ],
+  "ai_response": "Based on your preferences, I'll give you 2 concise exercises to improve your posture:\n\n1. **Chest Stretch**: Stand in a doorway with your hands on the doorframe at shoulder height. Lean forward until you feel a stretch in your chest. Hold for 30 seconds.\n2. **Bridge**: Lie on your back with knees bent and feet flat. Slowly lift your hips, squeezing your glutes and lower back muscles. Hold for 2 seconds, then lower back down. Repeat for 10-15 reps.\n\nThese exercises will help improve your posture by strengthening your back muscles and increasing flexibility in your chest.",
+  "timestamp": "2025-05-06T01:26:12.408681"
+}
+
