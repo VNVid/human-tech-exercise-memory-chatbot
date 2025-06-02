@@ -1,3 +1,5 @@
+RANDOM_SEED = 26
+
 MODEL_TEMPERATURE = 0.3
 
 USE_BACKEND = "openai"  # "ollama" or "openai"
@@ -18,6 +20,12 @@ MODEL_NAME = "hugging-quants/Meta-Llama-3.1-8B-Instruct-GPTQ-INT4"
 OPENAI_BASE_URL = "http://localhost:8000/v1/"
 OPENAI_API_KEY = "-"
 
+# Prompt versions
 SYSTEM_PROMPT_VERSION = "v2"
 EXTRACT_PREF_PROMPT_VERSION = "v2.2"
 MERGE_PREF_PROMPT_VERSION = "v4.2"  # 4.2 the only working one
+PICTURE_AGENT_SEARCH_PROMPT_VERSION = "v2.1"
+PICTURE_AGENT_SELECT_PROMPT_VERSION = "v2.1"
+
+# Data path
+EXERCISES_CSV_PATH = "dataset/exercises_working_gifs.csv"

@@ -1,0 +1,19 @@
+extraction:
+  description:  A ReAct-style prompt that decides whether to recommend exercises based on recent user input. 
+      If needed, it builds a structured search query over the exercise database using specific columns 
+      and values.
+  versions:
+    - version: 1.0
+      notes: | 
+        Initial implementation of a ReAct-style agent that decides whether to recommend physical exercises 
+        or continue conversation.
+
+    - version: 2.0
+      notes: |
+        Modified the output format for search queries to return lists of values instead of single values.
+        No change to task logic.
+    - version: 2.1
+      notes: |
+        Refined prompt wording for clarity and explicitly enforced list format in all search parameters, 
+        even for single values.
+    

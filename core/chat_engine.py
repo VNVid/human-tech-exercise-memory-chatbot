@@ -1,4 +1,5 @@
 from typing import List
+import gradio as gr
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage, BaseMessage
 from config import USE_BACKEND, SYSTEM_PROMPT_VERSION, EXTRACT_PREF_PROMPT_VERSION, MERGE_PREF_PROMPT_VERSION
 from llm.ollama_backend import OllamaChat
@@ -6,15 +7,22 @@ from llm.openai_backend import OpenAIChat
 from core.preference_manager import PreferenceManager
 from core.prompt_manager import PromptManager
 from core.logger import Logger
+from core.picture_agent import PictureAgent
+
+# TESTING dataset
+# Load the dataset and get the first gif URL (outside the function)
+import pandas as pd
+df = pd.read_csv("dataset/exercises_working_gifs.csv")
+first_gif_url = df["gifUrl"].iloc[0]
+# TESTING end
 
 # Session chat history
 chat_history = []
 # Session logger
 logger = None
 
+
 # LLM backend selection
-
-
 def get_llm():
     if USE_BACKEND == "ollama":
         return OllamaChat()
@@ -27,6 +35,8 @@ def get_llm():
 llm_instance = get_llm()
 prompt_mgr = PromptManager()
 pref_mgr = PreferenceManager(llm_instance)
+# Holds session-specific state (IDs), cleared when the session ends.
+picture_agent = PictureAgent(llm_instance)
 
 
 def get_session_id(user_info: dict) -> str:
@@ -52,9 +62,17 @@ def reset_chat_history(user_info: dict):
 
     logger = None
 
+    picture_agent.clear_state()
+
 
 def generate_chat_response(user_msg: str, user_info: dict) -> str:
+    #  !   !   ! DELETE       DELETE    !   !   !   DELETE          DELETE      !   !   !
+    # return ["HI", gr.Image(value=first_gif_url, width=1000, height=1000)]
+    #  !   !   ! DELETE       DELETE    !   !   !   DELETE          DELETE      !   !   !
+
     username = get_session_id(user_info)
+
+    picture_agent.process(chat_history, user_msg)
 
     # Extract and update preferences, get combined preferences
     raw_extract, new_prefs, raw_merge, preferences = pref_mgr.process(

@@ -159,7 +159,7 @@ class PreferenceManager:
 
         return raw
 
-    def parse_output(self, raw: str, key: str = "new_preferences") -> List[str]:
+    def _parse_output(self, raw: str, key: str = "new_preferences") -> List[str]:
         """
         Given the extractor or merge LLM's raw string, parse the JSON under "Output: { key : [...]}".
 
@@ -211,7 +211,7 @@ class PreferenceManager:
         # Merge via LLM
         raw_merge = self.merge_preferences_raw(existing, new_prefs)
         # Parse merged list
-        merged = self.parse_output(raw_merge, key="merged_preferences")
+        merged = self._parse_output(raw_merge, key="merged_preferences")
         # Save resulting list in the storage
         self.save(username, merged)
 
@@ -238,7 +238,7 @@ class PreferenceManager:
         # Extract via LLM
         raw = self.extract_preferences_raw(chat_history, last_user_message)
         # Parse extracted list
-        new_prefs = self.parse_output(raw)
+        new_prefs = self._parse_output(raw)
         # Merge new preferences with older ones
         raw_merged, merged = self.add_preferences(username, new_prefs)
 

@@ -1,0 +1,14 @@
+extraction:
+  description:  A prompt that selects the best subset of candidate exercises
+    for the user's request from a provided list of rows. It honors any explicit
+    number the user asked for and otherwise falls back to a default size.
+  versions:
+    - version: 1.0
+      notes: Initial implementation of the selection prompt.
+    
+    - version: 2.0
+      notes:  Added a concise 'Think' section to encourage the LLM to briefly explain its rationale.
+    - version: 2.1
+      notes: |
+        Added an explicit instruction that the agent mustn't return more than
+        the allowed number of exercises, preventing oversized results.
