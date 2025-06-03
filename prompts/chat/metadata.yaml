@@ -10,3 +10,12 @@ chat:
     
     - version: v2
       notes: "Version introducing personalization"
+
+    - version: v3
+      notes: |
+        Added support for visual exercise data. Assistant is instructed to follow new output format
+        and reply in two sections (Textual response + Images).
+    - version: v3.1
+      notes: |
+        Added instruction not to mention numeric IDs in response to user and 
+        instead refer to exercises by name only.

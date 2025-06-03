@@ -33,7 +33,44 @@ class ExerciseDB:
 
             df = df[df[col].isin(val)]
 
-        return df
+        return df.copy()
+
+    def get_rows_by_ids(self, ids: List[int]) -> pd.DataFrame:
+        """
+        Return a DataFrame containing only the rows whose "id" column is in 'ids'.
+
+        If an ID is not found, it is simply omitted from the result (no error).
+        """
+
+        id_set = set(ids)
+        filtered = self._df[self._df["id"].isin(id_set)].copy()
+
+        return filtered
+
+    def reorder_and_filter_columns(self, rows: pd.DataFrame) -> pd.DataFrame:
+        """
+        Given a DataFrame 'rows',cproduce a new DataFrame with:
+          1. All columns except for "url" column.
+          2. Reordered so that "id" is first, "name" (exercise name) is second, then all other
+             columns (in the same relative order as they appeared originally).
+        """
+        # Build a list of columns that do not contain "url"
+        all_cols = list(rows.columns)
+        filtered_cols = [c for c in all_cols if "url" not in c.lower()]
+
+        # Force "id" first, "name" second, then append anything else
+        ordered_cols = []
+        if "id" in filtered_cols:
+            ordered_cols.append("id")
+        if "name" in filtered_cols:
+            ordered_cols.append("name")
+
+        for c in filtered_cols:
+            if c not in ("id", "name"):
+                ordered_cols.append(c)
+
+        # Return a new DataFrame with only those columns, in the specified order
+        return rows.loc[:, ordered_cols].copy()
 
     def get_url_by_id(self, ex_id: int) -> str:
         """
