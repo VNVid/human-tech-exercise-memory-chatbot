@@ -217,12 +217,14 @@ def generate_chat_response(user_msg: str, user_info: dict) -> str:
         return text_resp
 
     # Prepare images for illustration
-    images_to_show = []  # List[gr.Image]
+    images_to_show = []  # List of gr.Image and str with corresponding exercise name
     for id in img_ids:
         try:
             url = db.get_url_by_id(id)
             name = db._df[db._df["id"] == id]["name"]
-            images_to_show.append(gr.Image(value=url, label=name))
+
+            images_to_show.append(gr.Image(value=url))
+            images_to_show.append(name)
         except Exception:
             continue
 
