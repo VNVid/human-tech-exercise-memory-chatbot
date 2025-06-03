@@ -82,6 +82,16 @@ class ExerciseDB:
             raise KeyError(f"No exercise with id={ex_id}")
         return row.iloc[0]["gifUrl"]
 
+    def get_name_by_id(self, ex_id: int) -> str:
+        """
+        Return the 'name' for a single exercise id.
+        """
+
+        row = self._df[self._df["id"] == ex_id]
+        if row.empty:
+            raise KeyError(f"No exercise with id={ex_id}")
+        return row.iloc[0]["name"]
+
     def all_values(self) -> Dict[str, List[str]]:
         """
         Return the unique values for bodyPart, equipment, target

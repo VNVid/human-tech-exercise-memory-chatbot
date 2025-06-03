@@ -12,12 +12,6 @@ from core.logger import Logger
 from core.picture_agent import PictureAgent
 from core.exercise_db import ExerciseDB
 
-# TESTING dataset
-# Load the dataset and get the first gif URL (outside the function)
-import pandas as pd
-df = pd.read_csv("dataset/exercises_working_gifs.csv")
-first_gif_url = df["gifUrl"].iloc[0]
-# TESTING end
 
 # Session chat history
 chat_history = []
@@ -101,36 +95,44 @@ def split_llm_sections(raw: str) -> Tuple[str, List[int]]:
 
     If the pattern isn't matched or JSON fails, returns (raw.strip(), []).
     """
-    pattern = re.compile(
-        r"Textual\s+response:\s*(.*?)\s*Images:\s*(\[.*\])",
-        re.DOTALL
-    )
-    m = pattern.search(raw)
-    if not m:
-        # Pattern not found, treat entire raw as textual and no images
-        return raw.strip(), []
+    # Find the "Images:" section (any prefix, then Images:, then [ ... ])
+    img_pattern = re.compile(r"Images:\s*(\[.*\])", re.DOTALL)
+    m_img = img_pattern.search(raw)
 
-    textual_resp = m.group(1).strip()
-    images_json = m.group(2).strip()
+    if m_img:
+        images_json = m_img.group(1).strip()
+        im_sect_start = m_img.start()
+    else:
+        images_json = ""
+        im_sect_start = len(raw)
 
-    try:
-        img_ids = json.loads(images_json)
-        # Ensure each element is an integer
-        if isinstance(img_ids, list):
-            img_ids = [int(x) for x in img_ids]
-        else:
+    # Parse the JSON array of IDs
+    img_ids = []
+    if images_json:
+        try:
+            parsed = json.loads(images_json)
+            if isinstance(parsed, list):
+                img_ids = [int(x) for x in parsed]
+            else:
+                img_ids = []
+        except json.JSONDecodeError:
             img_ids = []
-    except json.JSONDecodeError:
-        img_ids = []
+
+    # Take everything before the Images section as the textual slice
+    textual_slice = raw[:im_sect_start].strip()
+
+    # Extract the "Textual response:" part
+    text_pattern = re.compile(r"Textual\s+response:\s*(.*?)\s*$", re.DOTALL)
+    m_text = text_pattern.search(textual_slice)
+    if m_text:
+        textual_resp = m_text.group(1).strip()
+    else:
+        textual_resp = textual_slice
 
     return textual_resp, img_ids
 
 
 def generate_chat_response(user_msg: str, user_info: dict) -> str:
-    #  !   !   ! DELETE       DELETE    !   !   !   DELETE          DELETE      !   !   !
-    # return ["HI", gr.Image(value=first_gif_url, width=1000, height=1000)]
-    #  !   !   ! DELETE       DELETE    !   !   !   DELETE          DELETE      !   !   !
-
     username = get_session_id(user_info)
 
     # 1) Extract and update preferences, get combined preferences
@@ -189,14 +191,12 @@ def generate_chat_response(user_msg: str, user_info: dict) -> str:
     # 8) Parse response into Text and Images sections
     text_resp, img_ids = split_llm_sections(response)
 
-    print("TEXT PARSED\n", text_resp, "\n")
+    # print("TEXT PARSED\n", text_resp, "\n")
     print("IMAGES PARSED\n", img_ids, "\n")
 
     if len(candidate_ids) > 0:
         response = sys_info_block + response
     chat_history.append(AIMessage(content=response))
-
-    print(chat_history)
 
     # Log this turn
     if logger:
@@ -221,7 +221,7 @@ def generate_chat_response(user_msg: str, user_info: dict) -> str:
     for id in img_ids:
         try:
             url = db.get_url_by_id(id)
-            name = db._df[db._df["id"] == id]["name"]
+            name = db.get_name_by_id(id)
 
             images_to_show.append(gr.Image(value=url))
             images_to_show.append(name)
