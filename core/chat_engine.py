@@ -57,6 +57,7 @@ def reset_chat_history(user_info: dict):
     # TO-DO: save chat history
 
     chat_history.clear()
+    part_chat_history.clear()
 
     logger = None
 
@@ -148,6 +149,8 @@ def format_caption(raw_name: str, tab_count: int = 5) -> str:
 def generate_chat_response(user_msg: str, user_info: dict):
     username = get_session_id(user_info)
 
+    print("=" * 20)
+
     # 1) Extract and update preferences, get combined preferences
     raw_extract, new_prefs, raw_merge, preferences = pref_mgr.process(
         username, part_chat_history, user_msg)
@@ -182,8 +185,8 @@ def generate_chat_response(user_msg: str, user_info: dict):
     full_prompt = merge_system_messages(chat_history)
 
     # 6) If candidate IDs is not empty, add them to LLM's context
+    db = picture_agent.db  # ExerciseDB instance
     if len(candidate_ids) > 0:
-        db = picture_agent.db  # ExerciseDB instance
         exercise_rows = db.get_rows_by_ids(candidate_ids)
         reordered_rows = db.reorder_and_filter_columns(exercise_rows)
 
