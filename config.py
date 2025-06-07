@@ -20,8 +20,15 @@ MODEL_NAME = "hugging-quants/Meta-Llama-3.1-8B-Instruct-GPTQ-INT4"
 OPENAI_BASE_URL = "http://localhost:8000/v1/"
 OPENAI_API_KEY = "-"
 
+# Chatbot modality mode
+# If True, visuals are enabled.  If False, you get text-only responses.
+USE_IMAGES = True
+
 # Prompt versions
-SYSTEM_PROMPT_VERSION = "v3.1"
+if USE_IMAGES:
+    SYSTEM_PROMPT_VERSION = "v3.1"
+else:
+    SYSTEM_PROMPT_VERSION = "v2"
 EXTRACT_PREF_PROMPT_VERSION = "v2.2"
 MERGE_PREF_PROMPT_VERSION = "v4.2"  # 4.2 the only working one
 PICTURE_AGENT_SEARCH_PROMPT_VERSION = "v2.1"

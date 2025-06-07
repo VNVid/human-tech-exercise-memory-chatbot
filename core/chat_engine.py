@@ -3,7 +3,7 @@ import json
 from typing import List, Tuple
 import gradio as gr
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage, BaseMessage
-from config import USE_BACKEND, SYSTEM_PROMPT_VERSION, EXTRACT_PREF_PROMPT_VERSION, MERGE_PREF_PROMPT_VERSION
+from config import USE_BACKEND, SYSTEM_PROMPT_VERSION, EXTRACT_PREF_PROMPT_VERSION, MERGE_PREF_PROMPT_VERSION, USE_IMAGES
 from llm.ollama_backend import OllamaChat
 from llm.openai_backend import OpenAIChat
 from core.preference_manager import PreferenceManager
@@ -15,6 +15,7 @@ from core.exercise_db import ExerciseDB
 
 # Session chat history
 chat_history = []
+part_chat_history = []
 # Session logger
 logger = None
 
@@ -131,13 +132,25 @@ def split_llm_sections(raw: str) -> Tuple[str, List[int]]:
 
     return textual_resp, img_ids
 
+def format_caption(raw_name: str, tab_count: int = 5) -> str:
+    """
+    Lowercase everything, then uppercase first char.
+    Add a trailing colon.
+
+    Returns formatted string.
+    """
+
+    # normalize spacing & case
+    pretty = raw_name.strip().lower().capitalize() + ":"
+    return pretty
+
 
 def generate_chat_response(user_msg: str, user_info: dict):
     username = get_session_id(user_info)
 
     # 1) Extract and update preferences, get combined preferences
     raw_extract, new_prefs, raw_merge, preferences = pref_mgr.process(
-        username, chat_history, user_msg)
+        username, part_chat_history, user_msg)
 
     # 2) Insert preferences into system prompt
     # Find any existing “User preferences:” message
@@ -157,9 +170,13 @@ def generate_chat_response(user_msg: str, user_info: dict):
 
     # 3) Add user message to chat history
     chat_history.append(HumanMessage(content=user_msg))
+    part_chat_history.append(HumanMessage(content=user_msg))
 
     # 4) Get candidate IDs  from PictureAgent
-    candidate_ids = picture_agent.process(chat_history, user_msg)
+    if USE_IMAGES:
+        candidate_ids = picture_agent.process(chat_history, user_msg)
+    else:
+        candidate_ids = []
 
     # 5) Create full chat prompt, merging system messages
     full_prompt = merge_system_messages(chat_history)
@@ -189,10 +206,16 @@ def generate_chat_response(user_msg: str, user_info: dict):
     print("\n", response, "\n")
 
     # 8) Parse response into Text and Images sections
-    text_resp, img_ids = split_llm_sections(response)
+    if USE_IMAGES:
+        text_resp, img_ids = split_llm_sections(response)
 
-    # print("TEXT PARSED\n", text_resp, "\n")
-    print("IMAGES PARSED\n", img_ids, "\n")
+        # print("TEXT PARSED\n", text_resp, "\n")
+        print("IMAGES PARSED\n", img_ids, "\n")
+    else:
+        text_resp, img_ids = response, []
+
+    # Save raw LLM response to partial history containing no system info blocks
+    part_chat_history.append(AIMessage(content=response))
 
     if len(candidate_ids) > 0:
         response = sys_info_block + response
@@ -223,8 +246,8 @@ def generate_chat_response(user_msg: str, user_info: dict):
             url = db.get_url_by_id(id)
             name = db.get_name_by_id(id)
 
+            images_to_show.append(format_caption(name))
             images_to_show.append(gr.Image(value=url))
-            images_to_show.append(name)
         except Exception:
             continue
 
