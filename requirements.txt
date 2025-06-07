@@ -1,0 +1,8 @@
+gradio>=5.25.1,<6
+langchain-core>=0.3.58
+langchain-openai>=0.3.18
+langchain-ollama>=0.3.3
+pandas>=2.2,<3
+numpy>=1.26
+openai>=1.14
+pillow>=10

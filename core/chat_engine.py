@@ -132,7 +132,7 @@ def split_llm_sections(raw: str) -> Tuple[str, List[int]]:
     return textual_resp, img_ids
 
 
-def generate_chat_response(user_msg: str, user_info: dict) -> str:
+def generate_chat_response(user_msg: str, user_info: dict):
     username = get_session_id(user_info)
 
     # 1) Extract and update preferences, get combined preferences
@@ -174,7 +174,7 @@ def generate_chat_response(user_msg: str, user_info: dict) -> str:
         sys_info_block = (
             "### Start of system information ###\n"
             "Here is the set of exercises to choose from:\n"
-            f"{reordered_rows.to_json(orient="records", force_ascii=False, indent=2)}\n"
+            f"{reordered_rows.to_json(orient='records', force_ascii=False, indent=2)}\n"
             "### End of system information ###\n\n"
         )
 
