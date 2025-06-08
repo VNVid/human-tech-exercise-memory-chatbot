@@ -1,0 +1,29 @@
+
+
+ Raw
+ Think: 
+The user's last message is "How can I improve hip mobility at home?" which indicates that they are looking for a specific exercise or routine to improve their hip mobility. This suggests that an exercise recommendation might be relevant.
+
+To determine if an exercise recommendation is needed, I will look for keywords in the last user message that are related to exercise or fitness. In this case, the keywords "improve" and "mobility" are present.
+
+Next, I will identify the relevant body part that the user is targeting, which in this case is the "hips".
+
+To construct a search query, I will select the "bodyPart" column and supply the value "hips" (or more accurately "lower legs" since hips are part of the lower legs).
+
+Action:
+{"chat": false,
+ "search parameters": {"bodyPart": ["lower legs"]}} 
+
+
+
+ Action
+ {'chat': False, 'search parameters': {'bodyPart': ['lower legs']}} 
+
+Selection raw:
+ Think:  
+    The user is asking for exercises to improve hip mobility at home, so I will select exercises that target the calves, as they are crucial for hip mobility. I will also consider exercises that can be done without any equipment, as the user is looking for home-based exercises.
+
+Action:  
+    {"IDs": [1368, 257, 284, 400, 409, 417, 1407, 1377, 1378, 1381]}
+Selected IDs:
+ {'IDs': [1368, 257, 284, 400, 409, 417, 1407, 1377, 1378, 1381]}

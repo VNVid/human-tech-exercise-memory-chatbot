@@ -1,0 +1,33 @@
+
+
+ Raw
+ Think: 
+The user's last message is "How can I improve hip mobility at home?" which indicates they are looking for a specific exercise or routine to improve their hip mobility. This suggests that an exercise recommendation might be relevant.
+
+To determine if an exercise recommendation is needed, I will look for keywords in the user's last message that are related to exercise or fitness. In this case, the user mentions "improve hip mobility", which is a clear indication that they are looking for an exercise or routine to achieve this goal.
+
+Next, I will identify the relevant body parts, equipment, and targets that are associated with hip mobility. Based on the exercise database, the relevant body parts are "lower legs" and "waist", the relevant equipment is "body weight", and the relevant targets are "glutes", "hamstrings", and "quads".
+
+Action:
+{
+  "chat": false,
+  "search parameters": {
+    "bodyPart": ["lower legs", "waist"],
+    "equipment": ["body weight"],
+    "target": ["glutes", "hamstrings", "quads"]
+  }
+} 
+
+
+
+ Action
+ {'chat': False, 'search parameters': {'bodyPart': ['lower legs', 'waist'], 'equipment': ['body weight'], 'target': ['glutes', 'hamstrings', 'quads']}} 
+
+Selection raw:
+ Think:  
+The user is asking for exercises to improve hip mobility at home. To provide relevant exercises, I will look for exercises that target the hips and are suitable for home workouts.
+
+Action:  
+{"IDs": [1, 2, 3, 4, 5]}
+Selected IDs:
+ {'IDs': [1, 2, 3, 4, 5]}

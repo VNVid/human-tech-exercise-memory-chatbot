@@ -1,0 +1,27 @@
+
+
+ Raw
+ Think: 
+To determine if the user's last message should trigger an exercise recommendation, I need to analyze the content of the last message. The user's goal is to lose weight and get a smaller waist, which implies they want to focus on exercises that target weight loss and waist reduction. 
+
+I will look for keywords in the last message that match the allowed values in the exercise database columns (bodyPart, equipment, target). If I find any matches, it means the user's goal is related to a specific body part, equipment, or target muscle group, and I should recommend exercises that target those areas.
+
+In this case, the user's goal is to get a smaller waist, which is related to the "waist" body part and potentially the "abs" target muscle group.
+
+Action:
+Action: {"chat": false,
+         "search parameters": {"bodyPart": ["waist"], "target": ["abs"]}} 
+
+
+
+ Action
+ {'chat': False, 'search parameters': {'bodyPart': ['waist'], 'target': ['abs']}} 
+
+Selection raw:
+ Think:  
+The user is looking to lose weight and get a smaller waist, which suggests they are interested in exercises that target the abdominal muscles. To achieve this, I will select exercises that focus on the waist and target the abs. Since the user didn't specify a number of exercises, I will choose a diverse set of 10 exercises that effectively target the waist and abs.
+
+Action:  
+{"IDs": [3, 6, 3204, 11, 94, 2799, 3544, 2466, 175, 3016]}
+Selected IDs:
+ {'IDs': [3, 6, 3204, 11, 94, 2799, 3544, 2466, 175, 3016]}

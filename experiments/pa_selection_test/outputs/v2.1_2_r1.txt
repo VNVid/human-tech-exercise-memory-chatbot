@@ -1,0 +1,34 @@
+
+
+ Raw
+ Think: 
+To determine if the user's last message should trigger an exercise recommendation, we need to analyze the content of the last message. In this case, the user is asking about building strength in their upper arms and shoulders, which is a clear indication that they are looking for exercises to achieve this goal.
+
+To find suitable exercises, we need to construct a search query over the database. Based on the user's query, we can identify the relevant columns and values to include in the search query.
+
+The relevant columns are 'bodyPart' and 'target', as they are directly related to the user's query. The values for these columns can be inferred from the user's query as follows:
+
+- 'bodyPart': upper arms and shoulders
+- 'target': muscles in the upper arms and shoulders
+
+However, the 'target' column in the database does not directly match the user's query. We need to map the user's query to the corresponding targets in the database. Based on general knowledge, the muscles in the upper arms and shoulders include the biceps, delts, triceps, and upper back.
+
+Now, we can construct the search query by including the relevant columns and values.
+
+Action:
+{"chat": false,
+ "search parameters": {"bodyPart": ["upper arms", "shoulders"], "target": ["biceps", "delts", "triceps", "upper back"]}} 
+
+
+
+ Action
+ {'chat': False, 'search parameters': {'bodyPart': ['upper arms', 'shoulders'], 'target': ['biceps', 'delts', 'triceps', 'upper back']}} 
+
+Selection raw:
+ Think:  
+The user is asking for exercises to build strength in their upper arms and shoulders. I will select exercises that target these muscle groups, with a focus on biceps and triceps for upper arms, and deltoids for shoulders. I will also consider the equipment mentioned in the user's message, such as dumbbells, and choose exercises that use these equipment types.
+
+Action:  
+{"IDs": [1652, 1740, 427, 403, 416, 2405, 202, 216, 427, 403]}
+Selected IDs:
+ {'IDs': [1652, 1740, 427, 403, 416, 2405, 202, 216, 427, 403]}

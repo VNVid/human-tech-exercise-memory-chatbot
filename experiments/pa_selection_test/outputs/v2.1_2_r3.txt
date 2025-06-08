@@ -1,0 +1,33 @@
+
+
+ Raw
+ Think: 
+To determine if the user's last message should trigger an exercise recommendation, we need to analyze the content of the message. In this case, the user is asking about building strength in their upper arms and shoulders. This is a clear indication that they are looking for exercises to target these specific muscle groups.
+
+To decide which columns to include in the search query, we need to identify relevant keywords in the user's message. The keywords "upper arms" and "shoulders" are directly related to the "bodyPart" column in the exercise database. 
+
+We also need to consider the user's intent, which is to build strength. This implies that the exercises should be effective for building muscle mass, which is often associated with weightlifting. However, the user does not explicitly mention any equipment, so we cannot assume that they are looking for exercises that require specific equipment.
+
+Given these considerations, we can conclude that the user's last message should trigger an exercise recommendation.
+
+Action:
+{
+  "chat": false,
+  "search parameters": {
+    "bodyPart": ["upper arms", "shoulders"]
+  }
+} 
+
+
+
+ Action
+ {'chat': False, 'search parameters': {'bodyPart': ['upper arms', 'shoulders']}} 
+
+Selection raw:
+ Think:  
+The user is asking for exercises to build strength in their upper arms and shoulders. To provide the most suitable exercises, I will select exercises that target the biceps and triceps muscles in the upper arms, as well as the deltoids muscles in the shoulders. I will also consider the equipment mentioned in the user's message, which is dumbbells.
+
+Action:  
+{"IDs": [1652, 1740, 313, 427, 403, 416, 2405, 202, 216, 427]}
+Selected IDs:
+ {'IDs': [1652, 1740, 313, 427, 403, 416, 2405, 202, 216, 427]}

@@ -1,0 +1,110 @@
+
+
+ Raw
+ Think: 
+To determine if the user's last message should trigger an exercise recommendation, I need to analyze the content of the message. The user is asking about improving hip mobility at home, which suggests they are looking for exercises to target their hips. 
+
+Given the user's message, I will search the exercise database for exercises that target the hips. To do this, I will select the "target" column from the database and supply the value "glutes" as it is the primary muscle group responsible for hip mobility.
+
+Action: 
+{
+  "chat": false,
+  "search parameters": {"target": ["glutes"]}
+} 
+
+
+
+ Action
+ {'chat': False, 'search parameters': {'target': ['glutes']}} 
+
+Selection raw:
+ ### Selecting Suitable Exercises
+
+To select the most suitable exercises based on the user's request and chat context, we'll follow these steps:
+
+1.  Extract relevant information from the chat history and user's last message.
+2.  Identify the target muscle group (in this case, glutes) and filter exercises accordingly.
+3.  If the user requests a specific number of exercises, honor that request. Otherwise, choose up to 10 exercises that best match the user's request.
+
+### Code
+
+```javascript
+function selectExercises(chatHistory, lastUserMessage, exercises) {
+    // Extract relevant information from the chat history and user's last message
+    const userRequest = lastUserMessage.toLowerCase();
+
+    // Identify the target muscle group (in this case, glutes)
+    const targetMuscleGroup = "glutes";
+
+    // Filter exercises based on the target muscle group
+    const filteredExercises = exercises.filter(exercise => exercise.target.toLowerCase() === targetMuscleGroup);
+
+    // If the user requests a specific number of exercises, honor that request
+    const userRequestNumber = userRequest.match(/\d+/);
+    if (userRequestNumber) {
+        const requestedNumber = parseInt(userRequestNumber[0]);
+        return {
+            "IDs": filteredExercises.slice(0, requestedNumber).map(exercise => exercise.id)
+        };
+    }
+
+    // Otherwise, choose up to 10 exercises that best match the user's request
+    const suitableExercises = filteredExercises.sort((a, b) => {
+        const aSimilarity = similarity(a.name.toLowerCase(), userRequest.toLowerCase());
+        const bSimilarity = similarity(b.name.toLowerCase(), userRequest.toLowerCase());
+        return bSimilarity - aSimilarity;
+    }).slice(0, 10).map(exercise => exercise.id);
+
+    return {
+        "IDs": suitableExercises
+    };
+}
+
+// Function to calculate the similarity between two strings using the Levenshtein distance
+function similarity(s1, s2) {
+    const m = s1.length;
+    const n = s2.length;
+    let dp = new Array(m + 1).fill(0).map(() => new Array(n + 1).fill(0));
+
+    for (let i = 0; i <= m; i++) {
+        dp[i][0] = i;
+    }
+    for (let j = 0; j <= n; j++) {
+        dp[0][j] = j;
+    }
+
+    for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+            let cost = s1[i - 1] === s2[j - 1] ? 0 : 1;
+            dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + cost);
+        }
+    }
+
+    return 1 - dp[m][n] / Math.max(m, n);
+}
+
+const chatHistory = [
+    {
+        "role": "user",
+        "content": "How can I improve hip mobility at home?"
+    }
+];
+
+const lastUserMessage = "How can I improve hip mobility at home?";
+const exercises = [
+    // ... (insert exercises array here)
+];
+
+const result = selectExercises(chatHistory, lastUserMessage, exercises);
+console.log(result);
+```
+
+### Note
+
+This code assumes that the `exercises` array is already populated with the exercises data. You'll need to replace the `// ... (insert exercises array here)` comment with the actual array of exercises.
+
+The `similarity` function calculates the similarity between two strings using the Levenshtein distance. This is a simple implementation and may not be the most efficient or accurate method for calculating similarity. You may want to consider using a more advanced library or algorithm for this purpose.
+
+The `selectExercises` function returns a JSON object with the IDs of the selected exercises. You can modify the function to return additional information, such as the names or descriptions of the exercises, if needed.
+Selected IDs:
+ {'IDs': []}

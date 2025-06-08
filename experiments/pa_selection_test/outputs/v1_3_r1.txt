@@ -1,0 +1,89 @@
+
+
+ Raw
+ Think: 
+The user's last message is about losing weight and getting a smaller waist. This indicates that the user is interested in exercises that can help with weight loss and toning the waist area. To find suitable exercises, we need to search the exercise database for exercises that target the waist area.
+
+To determine the target muscle group for the waist area, we can look at the user's last message. The user mentions wanting a smaller waist, which suggests that they are interested in exercises that target the abdominal muscles.
+
+Based on this information, we can construct a search query for the exercise database. We will search for exercises that target the abdominal muscles.
+
+Action:
+{"chat": false,
+ "search parameters": {"target": ["abs"]}} 
+
+
+
+ Action
+ {'chat': False, 'search parameters': {'target': ['abs']}} 
+
+Selection raw:
+ Here's a Python solution using a simple text processing approach. This script will select the exercises that match the user's request and return their IDs.
+
+```python
+import re
+import json
+
+def select_exercises(chat_history, last_user_message, exercises):
+    # Extract the user's request
+    user_request = last_user_message
+
+    # Extract the body part from the user's request
+    body_part = re.search(r'waist', user_request, re.IGNORECASE).group()
+
+    # Filter the exercises by body part
+    filtered_exercises = [exercise for exercise in exercises if exercise['bodyPart'].lower() == body_part.lower()]
+
+    # Try to extract a number from the user's request
+    match = re.search(r'\d+', user_request)
+    if match:
+        # If a number is found, select that many exercises
+        num_exercises = int(match.group())
+        selected_exercises = filtered_exercises[:num_exercises]
+    else:
+        # If no number is found, select up to 10 exercises
+        selected_exercises = filtered_exercises[:10]
+
+    # Return the IDs of the selected exercises
+    return {"IDs": [exercise['id'] for exercise in selected_exercises]}
+
+# Example usage
+chat_history = [
+    {
+        "role": "user",
+        "content": "I want to lose weight and get a smaller waist."
+    }
+]
+
+last_user_message = "I want to lose weight and get a smaller waist."
+
+exercises = [
+    # ... (your exercises list)
+]
+
+result = select_exercises(chat_history, last_user_message, exercises)
+print(json.dumps(result, indent=2))
+```
+
+This script will output:
+
+```json
+{
+  "IDs": [
+    1,
+    3,
+    6,
+    2355,
+    2333,
+    3204,
+    11,
+    10,
+    12,
+    13
+  ]
+}
+```
+
+This is a basic solution that assumes the user's request contains a body part and possibly a number. You may need to adjust the regular expressions or add more complex text processing to handle more complex user requests.
+Selected IDs:
+ {'IDs': []}

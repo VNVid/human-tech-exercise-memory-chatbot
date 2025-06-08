@@ -1,0 +1,32 @@
+
+
+ Raw
+ Think: 
+The user's last message is asking for a way to build strength in their upper arms and shoulders. This is a clear indication that they are looking for exercises to target these specific muscle groups. 
+
+To determine the most suitable exercises, we need to identify the relevant body parts and possibly the equipment required. Based on the user's message, we can infer that the body parts of interest are "upper arms" and "shoulders". 
+
+We can also assume that the user may be looking for exercises that can be performed with or without equipment, but since they mentioned building strength, we can prioritize exercises that require equipment to provide progressive overload.
+
+Action:
+{
+  "chat": false,
+  "search parameters": {
+    "bodyPart": ["upper arms", "shoulders"],
+    "equipment": ["barbell", "dumbbell", "cable"]
+  }
+} 
+
+
+
+ Action
+ {'chat': False, 'search parameters': {'bodyPart': ['upper arms', 'shoulders'], 'equipment': ['barbell', 'dumbbell', 'cable']}} 
+
+Selection raw:
+ Think:  
+The user is asking for exercises to build strength in their upper arms and shoulders. I will select exercises that target these muscle groups, and if the user has specified a number, I will choose that many exercises. Otherwise, I will choose up to 10 exercises.
+
+Action:  
+{"IDs": [315, 408, 190, 1646, 235, 320, 1732, 350, 379, 2293]}
+Selected IDs:
+ {'IDs': [315, 408, 190, 1646, 235, 320, 1732, 350, 379, 2293]}

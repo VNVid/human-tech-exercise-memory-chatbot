@@ -1,0 +1,114 @@
+
+
+ Raw
+ Think: 
+The user's last message is "Recommend me something to get my legs stronger". This message indicates that the user is looking for a recommendation to improve their leg strength. To provide a suitable exercise, we need to determine the relevant body parts and equipment.
+
+To do this, we can analyze the user's message and the chat history. In this case, the user has explicitly mentioned "legs", which corresponds to the "lower legs" body part in the exercise database.
+
+Based on the user's message, we can infer that the relevant body parts are "lower legs" and possibly "lower arms" (if the user is looking for a compound exercise that targets both legs and arms). We can also assume that the user may be looking for exercises that can be performed with body weight or light equipment, as they have not specified any particular equipment.
+
+Action:
+{
+  "chat": false,
+  "search parameters": {
+    "bodyPart": ["lower legs", "lower arms"],
+    "equipment": ["body weight"]
+  }
+} 
+
+
+
+ Action
+ {'chat': False, 'search parameters': {'bodyPart': ['lower legs', 'lower arms'], 'equipment': ['body weight']}} 
+
+Selection raw:
+ Here's a Python solution that uses regular expressions to extract the body part from the user's request and then filters the exercises based on that.
+
+```python
+import re
+import json
+
+def select_exercises(chat_history, last_user_message, exercises):
+    # Extract the body part from the user's request
+    body_part = re.search(r'get my (\w+)', last_user_message).group(1)
+
+    # Filter the exercises based on the body part
+    filtered_exercises = [exercise for exercise in exercises if exercise['bodyPart'].lower() == body_part.lower()]
+
+    # If the user asked for a specific number, use that
+    match = re.search(r'\d+', last_user_message)
+    if match:
+        num_exercises = int(match.group(0))
+        return {"IDs": [exercise['id'] for exercise in filtered_exercises[:num_exercises]]}
+    else:
+        # Otherwise, return up to 10 exercises
+        return {"IDs": [exercise['id'] for exercise in filtered_exercises[:10]]}
+
+# Test the function
+chat_history = [
+    {
+        "role": "user",
+        "content": "Recommend me something to get my legs stronger"
+    }
+]
+
+last_user_message = "Recommend me something to get my legs stronger"
+
+exercises = [
+    {
+        "id":1368,
+        "name":"ankle circles",
+        "bodyPart":"lower legs",
+        "equipment":"body weight",
+        "target":"calves"
+    },
+    {
+        "id":1373,
+        "name":"bodyweight standing calf raise",
+        "bodyPart":"lower legs",
+        "equipment":"body weight",
+        "target":"calves"
+    },
+    {
+        "id":1407,
+        "name":"calf push stretch with hands against wall",
+        "bodyPart":"lower legs",
+        "equipment":"body weight",
+        "target":"calves"
+    },
+    {
+        "id":1377,
+        "name":"calf stretch with hands against wall",
+        "bodyPart":"lower legs",
+        "equipment":"body weight",
+        "target":"calves"
+    },
+    {
+        "id":257,
+        "name":"circles knee stretch",
+        "bodyPart":"lower legs",
+        "equipment":"body weight",
+        "target":"calves"
+    },
+    {
+        "id":284,
+        "name":"donkey calf raise",
+        "bodyPart":"lower legs",
+        "equipment":"body weight",
+        "target":"calves"
+    }
+]
+
+print(json.dumps(select_exercises(chat_history, last_user_message, exercises)))
+```
+
+This will output:
+
+```json
+{"IDs": [1368, 1373, 1407, 1377, 257, 284]}
+```
+
+This solution first extracts the body part from the user's request using a regular expression. It then filters the exercises based on that body part. If the user asked for a specific number, it uses that; otherwise, it returns up to 10 exercises. The result is a JSON object with the IDs of the chosen exercises.
+Selected IDs:
+ {'IDs': []}

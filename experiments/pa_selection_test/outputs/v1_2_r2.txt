@@ -1,0 +1,75 @@
+
+
+ Raw
+ Think: 
+To determine if the user's last message should trigger an exercise recommendation, I need to analyze the content of the message. 
+In this case, the user is asking for advice on building strength in their upper arms and shoulders, which is a clear indication that they are looking for exercises to achieve a specific fitness goal. 
+Given this context, it is likely that the user would benefit from a recommendation of exercises tailored to their needs.
+
+Action: 
+{
+  "chat": false,
+  "search parameters": {
+    "bodyPart": ["upper arms", "shoulders"],
+    "target": ["biceps", "delts", "triceps"]
+  }
+} 
+
+
+
+ Action
+ {'chat': False, 'search parameters': {'bodyPart': ['upper arms', 'shoulders'], 'target': ['biceps', 'delts', 'triceps']}} 
+
+Selection raw:
+ ```python
+import json
+
+def select_exercises(chat_history, last_user_message, candidate_exercises):
+    # Extract the user's request from the chat history
+    user_request = last_user_message
+
+    # Extract the target body parts from the user's request
+    target_body_parts = []
+    for word in user_request.split():
+        if word in ['upper', 'arms', 'shoulders']:
+            target_body_parts.append(word)
+
+    # Filter the candidate exercises based on the target body parts
+    filtered_exercises = []
+    for exercise in candidate_exercises:
+        if any(body_part in target_body_parts for body_part in exercise['bodyPart']):
+            filtered_exercises.append(exercise)
+
+    # If the user asked for a specific number of exercises, filter the results
+    try:
+        num_exercises = int(user_request.split()[-1])
+        filtered_exercises = filtered_exercises[:num_exercises]
+    except ValueError:
+        pass
+
+    # Return the IDs of the selected exercises
+    return {"IDs": [exercise['id'] for exercise in filtered_exercises[:10]]}
+
+# Example usage
+chat_history = [
+    {
+        "role": "user",
+        "content": "How can I build strength in my upper arms and shoulders?"
+    }
+]
+
+last_user_message = "How can I build strength in my upper arms and shoulders?"
+
+candidate_exercises = [
+    # ... (the list of candidate exercises)
+]
+
+result = select_exercises(chat_history, last_user_message, candidate_exercises)
+print(json.dumps(result))
+```
+
+This code first extracts the user's request from the chat history and the target body parts from the user's request. It then filters the candidate exercises based on the target body parts. If the user asked for a specific number of exercises, it filters the results accordingly. Finally, it returns the IDs of the selected exercises.
+
+Note that this code assumes that the user's request is in the format "How can I build strength in my [body part 1] and [body part 2]?" and that the user's request contains a specific number of exercises if they asked for a specific number. If the user's request is in a different format, the code may not work correctly.
+Selected IDs:
+ {'IDs': []}

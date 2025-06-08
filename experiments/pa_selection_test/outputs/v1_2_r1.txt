@@ -1,0 +1,64 @@
+
+
+ Raw
+ Think: 
+To determine if the user's last message should trigger an exercise recommendation, I need to analyze the content of the last user message. The user is asking about building strength in their upper arms and shoulders, which suggests they are looking for exercises to target those specific areas.
+
+To find suitable exercises, I need to construct a search query over the database of exercises. I can use the columns 'bodyPart' and 'target' to find exercises that match the user's requirements.
+
+The user is looking to build strength in their upper arms and shoulders, so I can use the following values for the search query:
+
+- For 'bodyPart', I can use 'upper arms' and 'shoulders'.
+- For 'target', I can use 'biceps', 'delts', and 'triceps'.
+
+Here is the search query I can use to find suitable exercises:
+
+Action: {"chat": false, "search parameters": {"bodyPart": ["upper arms", "shoulders"], "target": ["biceps", "delts", "triceps"]}} 
+
+
+
+ Action
+ {'chat': False, 'search parameters': {'bodyPart': ['upper arms', 'shoulders'], 'target': ['biceps', 'delts', 'triceps']}} 
+
+Selection raw:
+ ```python
+import re
+
+def select_exercises(chat_history, last_user_message, candidate_exercises):
+    # Extract the body parts from the last user message
+    body_parts = re.findall(r'\b\w+\b', last_user_message)
+    
+    # Filter the exercises based on the extracted body parts
+    filtered_exercises = [exercise for exercise in candidate_exercises 
+                           if any(body_part in exercise['bodyPart'] for body_part in body_parts)]
+    
+    # If the user asked for a specific number, extract it
+    match = re.search(r'\d+', last_user_message)
+    if match:
+        num_exercises = int(match.group())
+        # Return the top N exercises
+        return {"IDs": [exercise['id'] for exercise in sorted(filtered_exercises, key=lambda x: x['id'])[:num_exercises]]}
+    else:
+        # Return up to 10 exercises
+        return {"IDs": [exercise['id'] for exercise in sorted(filtered_exercises, key=lambda x: x['id'])[:10]]}
+
+# Test the function
+chat_history = [
+    {
+        "role": "user",
+        "content": "How can I build strength in my upper arms and shoulders?"
+    }
+]
+
+last_user_message = "How can I build strength in my upper arms and shoulders?"
+
+candidate_exercises = [
+    # ... (the list of candidate exercises)
+]
+
+print(select_exercises(chat_history, last_user_message, candidate_exercises))
+```
+
+This code will output the IDs of the top 10 exercises that match the user's request. If the user asked for a specific number, it will return that many exercises. If not, it will return up to 10 exercises.
+Selected IDs:
+ {'IDs': []}

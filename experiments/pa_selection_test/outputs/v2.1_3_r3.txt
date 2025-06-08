@@ -1,0 +1,25 @@
+
+
+ Raw
+ Think: 
+To determine if the user's last message should trigger an exercise recommendation, I need to analyze the content of the message. 
+The user's last message is "I want to lose weight and get a smaller waist." 
+This message indicates that the user is interested in weight loss and specifically mentions a smaller waist, which is a body part. 
+Based on this information, it seems that the user is looking for exercises that can help with weight loss and targeting the waist area.
+
+Action:
+Action: {"chat": false, "search parameters": {"bodyPart": ["waist"], "target": ["waist"]}} 
+
+
+
+ Action
+ {'chat': False, 'search parameters': {'bodyPart': ['waist'], 'target': ['waist']}} 
+
+Selection raw:
+ Think:  
+The user's goal is to lose weight and get a smaller waist, which suggests they want to target their core muscles. I will select exercises that target the abdominal muscles, such as crunches, leg raises, and planks.
+
+Action:  
+{"IDs": [1, 2, 3]}
+Selected IDs:
+ {'IDs': [1, 2, 3]}

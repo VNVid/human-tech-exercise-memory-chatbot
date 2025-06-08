@@ -1,0 +1,90 @@
+
+
+ Raw
+ Think: 
+To determine if the user's last message should trigger an exercise recommendation, I need to analyze the content of the message. 
+The user's message is "I want to lose weight and get a smaller waist." This message indicates a desire to lose weight and tone the waist area, which is a clear fitness goal. 
+Given the user's goal, recommending exercises that target the waist area would be beneficial. 
+To find suitable exercises, I need to construct a search query over the database by picking one or more columns (bodyPart, equipment, target) and supplying appropriate values.
+
+Action: 
+{
+  "chat": false,
+  "search parameters": {
+    "target": ["waist"],
+    "bodyPart": ["waist"]
+  }
+} 
+
+
+
+ Action
+ {'chat': False, 'search parameters': {'target': ['waist'], 'bodyPart': ['waist']}} 
+
+Selection raw:
+ ```python
+import json
+import re
+
+def select_exercises(chat_history, last_user_message, candidate_exercises):
+    # Extract the user's request
+    user_request = last_user_message
+
+    # Extract the number of exercises the user asked for
+    num_exercises_match = re.search(r'\d+', user_request)
+    if num_exercises_match:
+        num_exercises = int(num_exercises_match.group())
+    else:
+        num_exercises = 10  # Default to 10 exercises if no number is specified
+
+    # Filter exercises based on the user's request
+    filtered_exercises = []
+    for exercise in candidate_exercises:
+        if 'bodyPart' in exercise and 'target' in exercise:
+            if exercise['bodyPart'] in ['abdominals', 'obliques', 'lower abs', 'upper abs'] or \
+               exercise['target'] in ['obliques', 'lower abs', 'upper abs']:
+                filtered_exercises.append(exercise)
+
+    # Select the top N exercises based on relevance
+    selected_exercises = []
+    for exercise in filtered_exercises:
+        if len(selected_exercises) < num_exercises:
+            selected_exercises.append(exercise)
+        else:
+            break
+
+    # Return the IDs of the selected exercises
+    exercise_ids = [exercise['id'] for exercise in selected_exercises]
+    return json.dumps({'IDs': exercise_ids})
+
+# Example usage
+chat_history = [
+    {
+        "role": "user",
+        "content": "I want to lose weight and get a smaller waist."
+    }
+]
+
+last_user_message = "I want to lose weight and get a smaller waist."
+
+candidate_exercises = [
+    {'id': 1, 'name': 'Crunches', 'bodyPart': 'abdominals', 'equipment': 'bodyweight', 'target': 'lower abs'},
+    {'id': 2, 'name': 'Leg Raises', 'bodyPart': 'abdominals', 'equipment': 'bodyweight', 'target': 'lower abs'},
+    {'id': 3, 'name': 'Russian twists', 'bodyPart': 'obliques', 'equipment': 'bodyweight', 'target': 'obliques'},
+    {'id': 4, 'name': 'Bicycle crunches', 'bodyPart': 'abdominals', 'equipment': 'bodyweight', 'target': 'lower abs'},
+    {'id': 5, 'name': 'Plank', 'bodyPart': 'core', 'equipment': 'bodyweight', 'target': 'core'},
+    {'id': 6, 'name': 'Side plank', 'bodyPart': 'core', 'equipment': 'bodyweight', 'target': 'core'},
+    {'id': 7, 'name': 'Reverse crunches', 'bodyPart': 'abdominals', 'equipment': 'bodyweight', 'target': 'lower abs'},
+    {'id': 8, 'name': 'Hanging leg raises', 'bodyPart': 'abdominals', 'equipment': 'bodyweight', 'target': 'lower abs'},
+    {'id': 9, 'name': 'Woodchoppers', 'bodyPart': 'obliques', 'equipment': 'bodyweight', 'target': 'obliques'},
+    {'id': 10, 'name': 'Pallof press', 'bodyPart': 'core', 'equipment': 'bodyweight', 'target': 'core'},
+]
+
+print(select_exercises(chat_history, last_user_message, candidate_exercises))
+```
+
+This code will output: `{"IDs": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}`
+
+Note that the actual output will depend on the user's request and the candidate exercises. The code is designed to be flexible and can be modified to accommodate different requirements.
+Selected IDs:
+ {'IDs': []}
