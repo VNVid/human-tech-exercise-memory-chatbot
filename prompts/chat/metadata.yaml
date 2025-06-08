@@ -19,3 +19,8 @@ chat:
       notes: |
         Added instruction not to mention numeric IDs in response to user and 
         instead refer to exercises by name only.
+
+    - version: v4
+      notes: |
+        Added Think section for internal reasoning before generating responses. 
+        Added explicit instruction not to create system information block.
