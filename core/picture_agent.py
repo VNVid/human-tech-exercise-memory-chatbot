@@ -123,18 +123,16 @@ class PictureAgent:
         # Call the LLM
         raw = self.llm.generate_response(instruction_msg)
 
-        print("\n\n Raw\n", raw, "\n")
+        print("\nPictureAgent DECISION STEP\n", raw, "\n")
 
         action = self._parse_action(raw)
         if action is None:
             action = {"chat": True}
 
-        print("\n\n Action\n", action, "\n")
-
         return action
 
     def select_exercises(self, chat_history: List[BaseMessage], last_user_message: str,
-                         matching_rows, default_set_size: int = 10, max_rows_num: int = 100) -> Dict:
+                         matching_rows, default_set_size: int = 10, max_rows_num: int = 80) -> Dict:
         """
         From matching_rows (a DataFrame of candidate exercises),
         pick the most suitable subset and return the list of IDs.
@@ -204,13 +202,11 @@ class PictureAgent:
         # Call the LLM
         raw = self.llm.generate_response(instruction_msg)
 
-        print("Selection raw:\n", raw)
+        print("PictureAgent SELECTION STEP\n", raw)
 
         selected_ids = self._parse_action(raw)
         if selected_ids is None:
             selected_ids = {"IDs": []}
-
-        print("Selected IDs:\n", selected_ids)
 
         return selected_ids
 
