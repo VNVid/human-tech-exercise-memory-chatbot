@@ -36,3 +36,7 @@ PICTURE_AGENT_SELECT_PROMPT_VERSION = "v2.1"
 
 # Data path
 EXERCISES_CSV_PATH = "dataset/exercises_working_gifs.csv"
+
+
+# Enable thoughts in chat or show responses only
+STREAM_THOUGHTS = True

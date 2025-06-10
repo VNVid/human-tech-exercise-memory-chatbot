@@ -1,5 +1,7 @@
 import gradio as gr
 from core.chat_engine import init_chat_history, reset_chat_history, generate_chat_response
+from config import STREAM_THOUGHTS
+from core.chat_engine import stream_chat_messages
 
 user_info = {"username": ""}
 
@@ -28,8 +30,10 @@ def leave_session():
 
 
 def response(message, history):
-    return generate_chat_response(message, user_info)
-
+    if STREAM_THOUGHTS:
+        yield from stream_chat_messages(message, user_info)
+    else:
+        yield generate_chat_response(message, user_info)
 
 with gr.Blocks() as demo:
     with gr.Column(visible=True) as login_section:
@@ -42,9 +46,9 @@ with gr.Blocks() as demo:
         chat = gr.ChatInterface(
             fn=response,
             type='messages',
-            title="Exercise Chatbot",
-            description="Chat with a helpful LLM assistant",
-            examples=["Hello", "Example 1", "Example 2"],
+            title="Exercise Explainer Chatbot",
+            description="Hi there! I’m your Exercise Explainer. Ask me anything about workouts or recovery.",
+            examples=["Hello", "What are the best exercises for a strong core?", "Recommend me exercises for back pain relief"],
         )
 
         gr.Row(scale=2)
