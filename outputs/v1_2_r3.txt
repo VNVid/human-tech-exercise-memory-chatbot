@@ -1,0 +1,540 @@
+
+
+ Raw
+ Think: 
+The user's last message is asking about building strength in their upper arms and shoulders. This is a clear request for exercise recommendations. To determine the most suitable exercises, we need to search the exercise database based on the relevant body parts and possibly the equipment used. 
+
+Action: 
+{
+  "chat": false,
+  "search parameters": {
+    "bodyPart": ["upper arms", "shoulders"]
+  }
+} 
+
+
+
+ Action
+ {'chat': False, 'search parameters': {'bodyPart': ['upper arms', 'shoulders']}} 
+
+Selection raw:
+ ```python
+import re
+
+def select_exercises(chat_history, last_user_message, candidate_exercises):
+    # Extract the body parts from the last user message
+    body_parts = re.findall(r'\b\w+\b', last_user_message)
+    body_parts = [part.lower() for part in body_parts if part.lower() in ['upper arms', 'shoulders']]
+
+    # Filter the candidate exercises based on the extracted body parts
+    filtered_exercises = [exercise for exercise in candidate_exercises 
+                           if exercise['bodyPart'].lower() in body_parts]
+
+    # If the user asked for a specific number of exercises, filter them
+    match = re.search(r'\d+', last_user_message)
+    if match:
+        num_exercises = int(match.group())
+        filtered_exercises = filtered_exercises[:num_exercises]
+
+    # Return the IDs of the selected exercises
+    return {"IDs": [exercise['id'] for exercise in filtered_exercises[:10]]}
+
+chat_history = [
+  {
+    "role": "user",
+    "content": "How can I build strength in my upper arms and shoulders?"
+  }
+]
+
+last_user_message = "How can I build strength in my upper arms and shoulders?"
+
+candidate_exercises = [
+  {
+    "id":1652,
+    "name":"dumbbell bicep curl on exercise ball with leg raised",
+    "bodyPart":"upper arms",
+    "equipment":"dumbbell",
+    "target":"biceps"
+  },
+  {
+    "id":1740,
+    "name":"dumbbell standing bent over one arm triceps extension",
+    "bodyPart":"upper arms",
+    "equipment":"dumbbell",
+    "target":"triceps"
+  },
+  {
+    "id":986,
+    "name":"band one arm overhead biceps curl",
+    "bodyPart":"upper arms",
+    "equipment":"band",
+    "target":"biceps"
+  },
+  {
+    "id":1730,
+    "name":"dumbbell seated bent over alternate kickback",
+    "bodyPart":"upper arms",
+    "equipment":"dumbbell",
+    "target":"triceps"
+  },
+  {
+    "id":451,
+    "name":"ez barbell reverse grip curl",
+    "bodyPart":"upper arms",
+    "equipment":"ez barbell",
+    "target":"biceps"
+  },
+  {
+    "id":313,
+    "name":"dumbbell hammer curl",
+    "bodyPart":"upper arms",
+    "equipment":"dumbbell",
+    "target":"biceps"
+  },
+  {
+    "id":1619,
+    "name":"dumbbell incline one arm hammer press",
+    "bodyPart":"upper arms",
+    "equipment":"dumbbell",
+    "target":"triceps"
+  },
+  {
+    "id":427,
+    "name":"dumbbell standing palms in press",
+    "bodyPart":"shoulders",
+    "equipment":"dumbbell",
+    "target":"delts"
+  },
+  {
+    "id":403,
+    "name":"dumbbell seated revers grip concentration curl",
+    "bodyPart":"upper arms",
+    "equipment":"dumbbell",
+    "target":"biceps"
+  },
+  {
+    "id":416,
+    "name":"dumbbell standing biceps curl",
+    "bodyPart":"upper arms",
+    "equipment":"dumbbell",
+    "target":"biceps"
+  },
+  {
+    "id":152,
+    "name":"cable concentration extension (on knee)",
+    "bodyPart":"upper arms",
+    "equipment":"cable",
+    "target":"triceps"
+  },
+  {
+    "id":1618,
+    "name":"dumbbell incline hammer press on exercise ball",
+    "bodyPart":"upper arms",
+    "equipment":"dumbbell",
+    "target":"triceps"
+  },
+  {
+    "id":2405,
+    "name":"cable triceps pushdown (v-bar) (with arm blaster)",
+    "bodyPart":"upper arms",
+    "equipment":"cable",
+    "target":"triceps"
+  },
+  {
+    "id":1663,
+    "name":"dumbbell one arm hammer preacher curl",
+    "bodyPart":"upper arms",
+    "equipment":"dumbbell",
+    "target":"biceps"
+  },
+  {
+    "id":202,
+    "name":"cable rear delt row (stirrups)",
+    "bodyPart":"shoulders",
+    "equipment":"cable",
+    "target":"delts"
+  },
+  {
+    "id":216,
+    "name":"cable seated shoulder internal rotation",
+    "bodyPart":"shoulders",
+    "equipment":"cable",
+    "target":"delts"
+  },
+  {
+    "id":232,
+    "name":"cable standing pulldown (with rope)",
+    "bodyPart":"upper arms",
+    "equipment":"cable",
+    "target":"biceps"
+  },
+  {
+    "id":1640,
+    "name":"cable rope one arm hammer preacher curl",
+    "bodyPart":"upper arms",
+    "equipment":"cable",
+    "target":"biceps"
+  },
+  {
+    "id":219,
+    "name":"cable shoulder press",
+    "bodyPart":"shoulders",
+    "equipment":"cable",
+    "target":"delts"
+  },
+  {
+    "id":285,
+    "name":"dumbbell alternate biceps curl",
+    "bodyPart":"upper arms",
+    "equipment":"dumbbell",
+    "target":"biceps"
+  },
+  {
+    "id":1739,
+    "name":"dumbbell standing alternating tricep kickback",
+    "bodyPart":"upper arms",
+    "equipment":"dumbbell",
+    "target":"triceps"
+  },
+  {
+    "id":1457,
+    "name":"barbell standing wide military press",
+    "bodyPart":"shoulders",
+    "equipment":"barbell",
+    "target":"delts"
+  },
+  {
+    "id":1743,
+    "name":"dumbbell twisting bench press",
+    "bodyPart":"upper arms",
+    "equipment":"dumbbell",
+    "target":"triceps"
+  },
+  {
+    "id":1751,
+    "name":"barbell pin presses",
+    "bodyPart":"upper arms",
+    "equipment":"barbell",
+    "target":"triceps"
+  },
+  {
+    "id":1720,
+    "name":"barbell lying back of the head tricep extension",
+    "bodyPart":"upper arms",
+    "equipment":"barbell",
+    "target":"triceps"
+  },
+  {
+    "id":1741,
+    "name":"dumbbell standing bent over two arm triceps extension",
+    "bodyPart":"upper arms",
+    "equipment":"dumbbell",
+    "target":"triceps"
+  },
+  {
+    "id":392,
+    "name":"dumbbell seated front raise",
+    "bodyPart":"shoulders",
+    "equipment":"dumbbell",
+    "target":"delts"
+  },
+  {
+    "id":520,
+    "name":"kettlebell alternating press",
+    "bodyPart":"shoulders",
+    "equipment":"kettlebell",
+    "target":"delts"
+  },
+  {
+    "id":424,
+    "name":"dumbbell standing one arm palm in press",
+    "bodyPart":"shoulders",
+    "equipment":"dumbbell",
+    "target":"delts"
+  },
+  {
+    "id":398,
+    "name":"dumbbell seated one arm kickback",
+    "bodyPart":"upper arms",
+    "equipment":"dumbbell",
+    "target":"triceps"
+  },
+  {
+    "id":2188,
+    "name":"dumbbell seated triceps extension",
+    "bodyPart":"upper arms",
+    "equipment":"dumbbell",
+    "target":"triceps"
+  },
+  {
+    "id":1684,
+    "name":"dumbbell step up single leg balance with bicep curl",
+    "bodyPart":"upper arms",
+    "equipment":"dumbbell",
+    "target":"biceps"
+  },
+  {
+    "id":19,
+    "name":"assisted triceps dip (kneeling)",
+    "bodyPart":"upper arms",
+    "equipment":"leverage machine",
+    "target":"triceps"
+  },
+  {
+    "id":149,
+    "name":"cable alternate triceps extension",
+    "bodyPart":"upper arms",
+    "equipment":"cable",
+    "target":"triceps"
+  },
+  {
+    "id":259,
+    "name":"close-grip push-up",
+    "bodyPart":"upper arms",
+    "equipment":"body weight",
+    "target":"triceps"
+  },
+  {
+    "id":553,
+    "name":"kettlebell two arm military press",
+    "bodyPart":"shoulders",
+    "equipment":"kettlebell",
+    "target":"delts"
+  },
+  {
+    "id":235,
+    "name":"cable standing shoulder external rotation",
+    "bodyPart":"shoulders",
+    "equipment":"cable",
+    "target":"delts"
+  },
+  {
+    "id":1627,
+    "name":"ez barbell close grip preacher curl",
+    "bodyPart":"upper arms",
+    "equipment":"ez barbell",
+    "target":"biceps"
+  },
+  {
+    "id":1630,
+    "name":"cable close grip curl",
+    "bodyPart":"upper arms",
+    "equipment":"cable",
+    "target":"biceps"
+  },
+  {
+    "id":286,
+    "name":"dumbbell alternate side press",
+    "bodyPart":"shoulders",
+    "equipment":"dumbbell",
+    "target":"delts"
+  },
+  {
+    "id":246,
+    "name":"cable upright row",
+    "bodyPart":"shoulders",
+    "equipment":"cable",
+    "target":"delts"
+  },
+  {
+    "id":1634,
+    "name":"cable lying bicep curl",
+    "bodyPart":"upper arms",
+    "equipment":"cable",
+    "target":"biceps"
+  },
+  {
+    "id":365,
+    "name":"dumbbell over bench neutral wrist curl",
+    "bodyPart":"upper arms",
+    "equipment":"dumbbell",
+    "target":"biceps"
+  },
+  {
+    "id":3697,
+    "name":"cable kneeling rear delt row (with rope) (male)",
+    "bodyPart":"shoulders",
+    "equipment":"cable",
+    "target":"delts"
+  },
+  {
+    "id":35,
+    "name":"barbell decline close grip to skull press",
+    "bodyPart":"upper arms",
+    "equipment":"barbell",
+    "target":"triceps"
+  },
+  {
+    "id":405,
+    "name":"dumbbell seated shoulder press",
+    "bodyPart":"shoulders",
+    "equipment":"dumbbell",
+    "target":"delts"
+  },
+  {
+    "id":3289,
+    "name":"impossible dips",
+    "bodyPart":"upper arms",
+    "equipment":"body weight",
+    "target":"triceps"
+  },
+  {
+    "id":164,
+    "name":"cable front shoulder raise",
+    "bodyPart":"shoulders",
+    "equipment":"cable",
+    "target":"delts"
+  },
+  {
+    "id":128,
+    "name":"battling ropes",
+    "bodyPart":"shoulders",
+    "equipment":"rope",
+    "target":"delts"
+  },
+  {
+    "id":2137,
+    "name":"dumbbell arnold press",
+    "bodyPart":"shoulders",
+    "equipment":"dumbbell",
+    "target":"delts"
+  },
+  {
+    "id":2294,
+    "name":"dumbbell zottman preacher curl",
+    "bodyPart":"upper arms",
+    "equipment":"dumbbell",
+    "target":"biceps"
+  },
+  {
+    "id":394,
+    "name":"dumbbell seated kickback",
+    "bodyPart":"upper arms",
+    "equipment":"dumbbell",
+    "target":"triceps"
+  },
+  {
+    "id":1729,
+    "name":"dumbbell lying alternate extension",
+    "bodyPart":"upper arms",
+    "equipment":"dumbbell",
+    "target":"triceps"
+  },
+  {
+    "id":23,
+    "name":"barbell alternate biceps curl",
+    "bodyPart":"upper arms",
+    "equipment":"barbell",
+    "target":"biceps"
+  },
+  {
+    "id":422,
+    "name":"dumbbell standing one arm curl (over incline bench)",
+    "bodyPart":"upper arms",
+    "equipment":"dumbbell",
+    "target":"biceps"
+  },
+  {
+    "id":283,
+    "name":"diamond push-up",
+    "bodyPart":"upper arms",
+    "equipment":"body weight",
+    "target":"triceps"
+  },
+  {
+    "id":3302,
+    "name":"handstand",
+    "bodyPart":"upper arms",
+    "equipment":"body weight",
+    "target":"triceps"
+  },
+  {
+    "id":3542,
+    "name":"dumbbell incline t-raise",
+    "bodyPart":"shoulders",
+    "equipment":"dumbbell",
+    "target":"delts"
+  },
+  {
+    "id":1746,
+    "name":"exercise ball supine triceps extension",
+    "bodyPart":"upper arms",
+    "equipment":"dumbbell",
+    "target":"triceps"
+  },
+  {
+    "id":1735,
+    "name":"dumbbell lying single extension",
+    "bodyPart":"upper arms",
+    "equipment":"dumbbell",
+    "target":"triceps"
+  },
+  {
+    "id":176,
+    "name":"cable kneeling triceps extension",
+    "bodyPart":"upper arms",
+    "equipment":"cable",
+    "target":"triceps"
+  },
+  {
+    "id":420,
+    "name":"dumbbell standing kickback",
+    "bodyPart":"upper arms",
+    "equipment":"dumbbell",
+    "target":"triceps"
+  },
+  {
+    "id":1629,
+    "name":"barbell standing wide grip biceps curl",
+    "bodyPart":"upper arms",
+    "equipment":"barbell",
+    "target":"biceps"
+  },
+  {
+    "id":318,
+    "name":"dumbbell incline curl",
+    "bodyPart":"upper arms",
+    "equipment":"dumbbell",
+    "target":"biceps"
+  },
+  {
+    "id":378,
+    "name":"dumbbell rear fly",
+    "bodyPart":"shoulders",
+    "equipment":"dumbbell",
+    "target":"delts"
+  },
+  {
+    "id":1682,
+    "name":"ez bar seated close grip concentration curl",
+    "bodyPart":"upper arms",
+    "equipment":"ez barbell",
+    "target":"biceps"
+  },
+  {
+    "id":59,
+    "name":"barbell lying preacher curl",
+    "bodyPart":"upper arms",
+    "equipment":"barbell",
+    "target":"biceps"
+  },
+  {
+    "id":525,
+    "name":"kettlebell bottoms up clean from the hang position",
+    "bodyPart":"upper arms",
+    "equipment":"kettlebell",
+    "target":"biceps"
+  },
+  {
+    "id":2292,
+    "name":"dumbbell rear delt raise",
+    "bodyPart":"shoulders",
+    "equipment":"dumbbell",
+    "target":"delts"
+  },
+  {
+    "id":393,
+    "name":"dumbbell seated inner biceps curl",
+   
+Selected IDs:
+ {'IDs': []}

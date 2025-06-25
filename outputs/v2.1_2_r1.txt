@@ -1,0 +1,21 @@
+
+
+ Raw
+ Think: 
+The user's last message is asking about building strength in their upper arms and shoulders. This is a clear indication that they are looking for exercises to target these specific muscle groups. To provide a suitable response, we need to search the exercise database for exercises that target the upper arms and shoulders.
+
+Action: {"chat": false, "search parameters": {"target": ["biceps", "delts", "triceps", "upper back"], "bodyPart": ["upper arms", "shoulders"]}} 
+
+
+
+ Action
+ {'chat': False, 'search parameters': {'target': ['biceps', 'delts', 'triceps', 'upper back'], 'bodyPart': ['upper arms', 'shoulders']}} 
+
+Selection raw:
+ Think:  
+    The user is asking for exercises to build strength in their upper arms and shoulders. I will select exercises that target these muscle groups, with a focus on exercises that specifically target the biceps and triceps. I will also consider the equipment mentioned in the user's message, which is dumbbells.
+
+Action:  
+    {"IDs": [1652, 1740, 986, 451, 313, 427, 403, 416, 152, 2405, 202, 216, 232, 1640, 219, 285, 1739, 1457, 1743, 1751, 1720, 1741, 392, 520, 424, 398, 2188, 1684, 19, 149, 259, 553, 235, 1627, 1630, 286, 246, 1634, 365, 3697, 35, 405, 164, 128, 2137, 2294, 394, 1729, 23, 422, 283, 3302, 3542, 1746, 1735, 176, 420, 1629, 318, 378, 1682, 59, 525, 2292, 393, 315, 353, 523, 1456, 366, 1656, 1666, 306, 1638, 209, 370, 362, 436, 109, 387, 105, 1765, 404, 67, 2470, 1644, 338, 1670, 1723, 1669, 298, 1674, 2397, 1637, 299]}
+Selected IDs:
+ {'IDs': [1652, 1740, 986, 451, 313, 427, 403, 416, 152, 2405, 202, 216, 232, 1640, 219, 285, 1739, 1457, 1743, 1751, 1720, 1741, 392, 520, 424, 398, 2188, 1684, 19, 149, 259, 553, 235, 1627, 1630, 286, 246, 1634, 365, 3697, 35, 405, 164, 128, 2137, 2294, 394, 1729, 23, 422, 283, 3302, 3542, 1746, 1735, 176, 420, 1629, 318, 378, 1682, 59, 525, 2292, 393, 315, 353, 523, 1456, 366, 1656, 1666, 306, 1638, 209, 370, 362, 436, 109, 387, 105, 1765, 404, 67, 2470, 1644, 338, 1670, 1723, 1669, 298, 1674, 2397, 1637, 299]}

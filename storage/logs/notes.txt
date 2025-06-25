@@ -1,1 +1,0 @@
-Comparison of extraction prompts v2.1 and v3.1: a1 and a2, b1 and b2, c1 and c2, d1 and d2 

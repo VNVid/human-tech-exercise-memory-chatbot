@@ -1,0 +1,49 @@
+{
+  "SYSTEM_PROMPT_VERSION": "v4",
+  "user_message": "Recommend an exercise that strengthens the hamstrings without equipment.",
+  "ai_response": "### Start of system information ###\nHere is the set of exercises to choose from:\n[\n  {\n    \"id\":1511,\n    \"name\":\"hamstring stretch\",\n    \"bodyPart\":\"upper legs\",\n    \"equipment\":\"body weight\",\n    \"target\":\"hamstrings\"\n  },\n  {\n    \"id\":496,\n    \"name\":\"inverse leg curl (bench support)\",\n    \"bodyPart\":\"upper legs\",\n    \"equipment\":\"body weight\",\n    \"target\":\"hamstrings\"\n  },\n  {\n    \"id\":2400,\n    \"name\":\"inverse leg curl (on pull-up cable machine)\",\n    \"bodyPart\":\"upper legs\",\n    \"equipment\":\"body weight\",\n    \"target\":\"hamstrings\"\n  }\n]\n### End of system information ###\n\nThink:\nConsidering the user's request for an exercise that strengthens the hamstrings without equipment, I'll recommend the inverse leg curl (bench support) as it effectively targets the hamstrings and can be done using body weight.\n\nTextual response:\nI recommend trying the inverse leg curl (bench support) exercise to strengthen your hamstrings. This exercise targets the hamstrings and can be done using body weight, making it a great option without needing any equipment. To perform this exercise, lie on your back with your legs straight and lift your heels towards your glutes, squeezing your hamstrings at the top. Lower your heels back down to the starting position and repeat for 10-12 reps.\n\nImages:\n[496]",
+  "timestamp": "2025-06-25T00:46:22.151842"
+}
+
+{
+  "SYSTEM_PROMPT_VERSION": "v4",
+  "user_message": "why is this exercise good for strenghthening hamstring?",
+  "ai_response": "Think:\nThe inverse leg curl (bench support) exercise is effective for strengthening the hamstrings because it isolates the hamstrings and requires them to work against gravity. When performing this exercise, the hamstrings are responsible for lifting the heels towards the glutes, which engages the muscle and helps to build strength.\n\nTextual response:\nThe inverse leg curl (bench support) exercise is good for strengthening the hamstrings because it isolates the muscle and requires them to work against gravity. When you lift your heels towards your glutes, your hamstrings are responsible for the movement, which engages the muscle and helps to build strength. This exercise targets the biceps femoris, semitendinosus, and semimembranosus muscles in the hamstrings, making it a great option for strengthening this muscle group.\n\nImages:\n[]",
+  "timestamp": "2025-06-25T00:47:02.924581"
+}
+
+{
+  "SYSTEM_PROMPT_VERSION": "v4",
+  "user_message": "How does this exercise affect different leg muscles?",
+  "ai_response": "Think:\nThe inverse leg curl (bench support) exercise primarily targets the hamstrings, but it also engages other leg muscles to a lesser extent. The quadriceps, gluteus maximus, and gastrocnemius muscles are activated to help control the movement and maintain balance, but they are not the primary movers in this exercise.\n\nTextual response:\nWhen performing the inverse leg curl (bench support) exercise, the hamstrings are the primary movers, but other leg muscles are also engaged to help control the movement. The quadriceps and gluteus maximus muscles help to stabilize the knee and hip joints, while the gastrocnemius muscle assists with ankle movement. However, the hamstrings are the primary focus of this exercise, and they are responsible for lifting the heels towards the glutes.\n\nImages:\n[]",
+  "timestamp": "2025-06-25T00:47:46.530327"
+}
+
+{
+  "SYSTEM_PROMPT_VERSION": "v4",
+  "user_message": "Make a more detailed and structured answer, add formatting",
+  "ai_response": "Think:\nTo understand how the inverse leg curl (bench support) exercise affects different leg muscles, let's break down the movement and identify the primary movers and secondary muscles involved.\n\nTextual response:\n**Primary Movers:**\n\n* **Hamstrings:** The biceps femoris, semitendinosus, and semimembranosus muscles in the hamstrings are the primary movers in this exercise. They work together to lift the heels towards the glutes, engaging the muscle and helping to build strength.\n\n**Secondary Muscles:**\n\n* **Quadriceps:** The quadriceps muscles help to stabilize the knee joint and control the movement of the legs. They work to prevent the knees from extending or flexing excessively, ensuring that the movement remains controlled and focused on the hamstrings.\n* **Gluteus Maximus:** The gluteus maximus muscles assist with hip extension and help to maintain balance during the exercise. They work to prevent the hips from tilting or rotating, ensuring that the movement remains focused on the hamstrings.\n* **Gastrocnemius:** The gastrocnemius muscle assists with ankle movement and helps to control the movement of the feet. It works to prevent the feet from sliding or rotating, ensuring that the movement remains controlled and focused on the hamstrings.\n\n**Stabilizing Muscles:**\n\n* **Core Muscles:** The core muscles, including the abdominals and lower back muscles, help to stabilize the body and maintain balance during the exercise. They work to prevent the body from tilting or rotating, ensuring that the movement remains controlled and focused on the hamstrings.\n\nImages:\n[]",
+  "timestamp": "2025-06-25T00:48:16.841840"
+}
+
+{
+  "SYSTEM_PROMPT_VERSION": "v4",
+  "user_message": "Good, what Quadriceps is?",
+  "ai_response": "Think:\nThe quadriceps muscle is a group of four muscles located in the front of the thigh. It is a powerful muscle that helps to straighten the knee joint and stabilize the knee.\n\nTextual response:\nThe quadriceps muscle is a group of four muscles located in the front of the thigh, specifically in the quadriceps femoris muscle. It is a powerful muscle that helps to straighten the knee joint and stabilize the knee. The quadriceps muscle consists of four individual muscles:\n\n* Rectus femoris\n* Vastus lateralis\n* Vastus medialis\n* Vastus intermedius\n\nThese muscles work together to straighten the knee joint, extend the leg, and stabilize the knee. The quadriceps muscle is also responsible for helping to control the movement of the knee joint during activities such as walking, running, and jumping.\n\nImages:\n[]",
+  "timestamp": "2025-06-25T00:48:37.545924"
+}
+
+{
+  "SYSTEM_PROMPT_VERSION": "v4",
+  "user_message": "You know, i understand better when I read bold text",
+  "ai_response": "Think:\nI'll make sure to use bold text to highlight important information and make it easier for you to understand.\n\nTextual response:\n**The quadriceps muscle** is a group of four muscles located in the front of the thigh. It is a powerful muscle that helps to straighten the knee joint and stabilize the knee.\n\n**The quadriceps muscle consists of four individual muscles:**\n\n* **Rectus femoris**\n* **Vastus lateralis**\n* **Vastus medialis**\n* **Vastus intermedius**\n\nThese muscles work together to straighten the knee joint, extend the leg, and stabilize the knee. The quadriceps muscle is also responsible for helping to control the movement of the knee joint during activities such as walking, running, and jumping.\n\nImages:\n[]",
+  "timestamp": "2025-06-25T00:49:03.637415"
+}
+
+{
+  "SYSTEM_PROMPT_VERSION": "v4",
+  "user_message": "Can you make it all bold?",
+  "ai_response": "### Start of system information ###\nHere is the set of exercises to choose from:\n[\n  {\n    \"id\":1,\n    \"name\":\"3\\/4 sit-up\",\n    \"bodyPart\":\"waist\",\n    \"equipment\":\"body weight\",\n    \"target\":\"abs\"\n  },\n  {\n    \"id\":3,\n    \"name\":\"air bike\",\n    \"bodyPart\":\"waist\",\n    \"equipment\":\"body weight\",\n    \"target\":\"abs\"\n  },\n  {\n    \"id\":6,\n    \"name\":\"alternate heel touchers\",\n    \"bodyPart\":\"waist\",\n    \"equipment\":\"body weight\",\n    \"target\":\"abs\"\n  },\n  {\n    \"id\":7,\n    \"name\":\"alternate lateral pulldown\",\n    \"bodyPart\":\"back\",\n    \"equipment\":\"cable\",\n    \"target\":\"lats\"\n  },\n  {\n    \"id\":9,\n    \"name\":\"assisted chest dip (kneeling)\",\n    \"bodyPart\":\"chest\",\n    \"equipment\":\"leverage machine\",\n    \"target\":\"pectorals\"\n  },\n  {\n    \"id\":10,\n    \"name\":\"assisted hanging knee raise with throw down\",\n    \"bodyPart\":\"waist\",\n    \"equipment\":\"assisted\",\n    \"target\":\"abs\"\n  }\n]\n### End of system information ###\n\nThink:\nSince you prefer bold text, I'll make sure to use it throughout my response.\n\nTextual response:\n**The quadriceps muscle** is a **group of four muscles** located in the front of the thigh. It is a **powerful muscle** that helps to **straighten the knee joint** and **stabilize the knee**.\n\n**The quadriceps muscle consists of four individual muscles:**\n\n* **Rectus femoris**\n* **Vastus lateralis**\n* **Vastus medialis**\n* **Vastus intermedius**\n\n**These muscles work together to:**\n\n* **Straighten the knee joint**\n* **Extend the leg**\n* **Stabilize the knee**\n\n**The quadriceps muscle is also responsible for helping to control the movement of the knee joint during activities such as:**\n\n* **Walking**\n* **Running**\n* **Jumping**\n\nImages:\n[]",
+  "timestamp": "2025-06-25T00:49:21.456169"
+}
+

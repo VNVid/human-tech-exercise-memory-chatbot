@@ -24,18 +24,19 @@ OPENAI_API_KEY = "-"
 # CHATBOT CONFIGURATION
 
 # Chatbot modality mode
-# If True, visuals are enabled.  If False, you get text-only responses.
-USE_IMAGES = True
+# LegBot
+USE_IMAGES, STREAM_THOUGHTS = False, False
 
-# Enable thoughts in chat or show responses only
-STREAM_THOUGHTS = False
+# ArmBot
+#USE_IMAGES, STREAM_THOUGHTS = True, False
+
+# TorsoBot
+# USE_IMAGES, STREAM_THOUGHTS = True, True
+
 # -------------------------------------------------------------------------
 
 # Prompt versions
-if USE_IMAGES:
-    SYSTEM_PROMPT_VERSION = "v4"
-else:
-    SYSTEM_PROMPT_VERSION = "v2"
+SYSTEM_PROMPT_VERSION = "v4"
 EXTRACT_PREF_PROMPT_VERSION = "v2.2"
 MERGE_PREF_PROMPT_VERSION = "v4.2"  # 4.2 the only working one
 PICTURE_AGENT_SEARCH_PROMPT_VERSION = "v2.1"

@@ -1,0 +1,102 @@
+
+
+ Raw
+ Think: 
+The user's last message is "Recommend me an exercise for back pain relief". 
+This message indicates that the user is looking for an exercise recommendation. 
+To determine the most suitable exercises, we need to identify the relevant body parts and possibly the equipment or target muscles involved in back pain relief. 
+Based on the provided exercise database, we can infer that the relevant body parts for back pain relief are likely "back" and possibly "waist". 
+We can also consider the equipment or target muscles that are commonly associated with back pain relief, such as "body weight" or "hamstrings". 
+
+Action: 
+{
+  "chat": false,
+  "search parameters": {
+    "bodyPart": ["back", "waist"],
+    "equipment": ["body weight"],
+    "target": ["hamstrings"]
+  }
+} 
+
+
+
+ Action
+ {'chat': False, 'search parameters': {'bodyPart': ['back', 'waist'], 'equipment': ['body weight'], 'target': ['hamstrings']}} 
+
+Selection raw:
+ ```python
+import re
+import json
+
+def select_exercises(chat_history, last_user_message, candidate_exercises):
+    """
+    Select the most suitable exercises based on the user's request and chat context.
+
+    Args:
+    - chat_history (list): A list of the last few messages (role + content).
+    - last_user_message (str): The user's most recent input.
+    - candidate_exercises (list): A JSON array of candidate exercise rows.
+
+    Returns:
+    - A JSON object with the IDs of the chosen exercises.
+    """
+
+    # Extract the user's request keywords
+    keywords = re.findall(r'\w+', last_user_message)
+
+    # Initialize an empty list to store the selected exercises
+    selected_exercises = []
+
+    # Iterate over each candidate exercise
+    for exercise in candidate_exercises:
+        # Check if the exercise's name or body part matches any of the user's keywords
+        if any(keyword.lower() in exercise['name'].lower() or keyword.lower() in exercise['bodyPart'].lower() for keyword in keywords):
+            # Add the exercise to the selected list
+            selected_exercises.append(exercise)
+
+    # If the user asked for a specific number of exercises, select that many
+    match = re.search(r'\d+', last_user_message)
+    if match:
+        num_exercises = int(match.group())
+        selected_exercises = selected_exercises[:num_exercises]
+
+    # If no number was specified, select up to 10 exercises
+    else:
+        selected_exercises = selected_exercises[:10]
+
+    # Return a JSON object with the IDs of the selected exercises
+    return json.dumps({'IDs': [exercise['id'] for exercise in selected_exercises]})
+
+# Example usage
+chat_history = [
+    {
+        "role": "user",
+        "content": "Recommend me an exercise for back pain relief"
+    }
+]
+
+last_user_message = "Recommend me an exercise for back pain relief"
+
+candidate_exercises = [
+    {'id': 1, 'name': 'Exercise 1', 'bodyPart': 'Back', 'equipment': 'None', 'target': 'Back'},
+    {'id': 2, 'name': 'Exercise 2', 'bodyPart': 'Chest', 'equipment': 'None', 'target': 'Chest'},
+    {'id': 3, 'name': 'Exercise 3', 'bodyPart': 'Back', 'equipment': 'None', 'target': 'Back'},
+    {'id': 4, 'name': 'Exercise 4', 'bodyPart': 'Legs', 'equipment': 'None', 'target': 'Legs'},
+    {'id': 5, 'name': 'Exercise 5', 'bodyPart': 'Back', 'equipment': 'None', 'target': 'Back'},
+    {'id': 6, 'name': 'Exercise 6', 'bodyPart': 'Back', 'equipment': 'None', 'target': 'Back'},
+    {'id': 7, 'name': 'Exercise 7', 'bodyPart': 'Back', 'equipment': 'None', 'target': 'Back'},
+    {'id': 8, 'name': 'Exercise 8', 'bodyPart': 'Back', 'equipment': 'None', 'target': 'Back'},
+    {'id': 9, 'name': 'Exercise 9', 'bodyPart': 'Back', 'equipment': 'None', 'target': 'Back'},
+    {'id': 10, 'name': 'Exercise 10', 'bodyPart': 'Back', 'equipment': 'None', 'target': 'Back'},
+    {'id': 11, 'name': 'Exercise 11', 'bodyPart': 'Back', 'equipment': 'None', 'target': 'Back'},
+    {'id': 12, 'name': 'Exercise 12', 'bodyPart': 'Back', 'equipment': 'None', 'target': 'Back'},
+]
+
+print(select_exercises(chat_history, last_user_message, candidate_exercises))
+```
+
+This code defines a function `select_exercises` that takes in the chat history, user's last message, and candidate exercises. It extracts the user's request keywords, iterates over each candidate exercise, and checks if the exercise's name or body part matches any of the user's keywords. If a match is found, the exercise is added to the selected list. If the user asked for a specific number of exercises, the function selects that many exercises. Otherwise, it selects up to 10 exercises. Finally, it returns a JSON object with the IDs of the selected exercises.
+
+In the example usage, the function is called with the provided chat history, user's last message, and candidate exercises. The output is a JSON object with the IDs of the selected exercises.
+Selected IDs:
+ {'IDs': []}

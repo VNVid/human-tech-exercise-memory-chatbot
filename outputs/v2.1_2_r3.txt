@@ -1,0 +1,28 @@
+
+
+ Raw
+ Think: 
+The user's last message is asking for a strength-building workout for their upper arms and shoulders. This is a clear indication that they are looking for exercise recommendations. 
+
+To determine the most suitable exercises, we need to identify the relevant body parts and equipment. Based on the user's message, the relevant body parts are "upper arms" and "shoulders". We also need to consider the equipment that would be most effective for these exercises.
+
+Looking at the exercise database, we can see that the relevant body parts are "upper arms" and "shoulders". The most suitable equipment for these exercises would be "dumbbell" and "barbell".
+
+Action:
+{"chat": false,
+ "search parameters": {"bodyPart": ["upper arms", "shoulders"],
+                      "equipment": ["dumbbell", "barbell"]}} 
+
+
+
+ Action
+ {'chat': False, 'search parameters': {'bodyPart': ['upper arms', 'shoulders'], 'equipment': ['dumbbell', 'barbell']}} 
+
+Selection raw:
+ Think:  
+The user is asking for exercises to build strength in their upper arms and shoulders. I will select exercises that target the triceps and biceps muscles in the upper arms, as well as exercises that target the deltoids in the shoulders.
+
+Action:  
+{"IDs": [1618, 1718, 306, 354, 109, 338, 1738, 2188, 1621, 1733, 415, 376, 2397, 341, 1700, 355, 2407, 106, 80, 426, 430, 392, 41, 405, 1659, 31, 59, 387, 345, 1647, 414, 100, 75, 1670, 2143, 1742, 65, 1660, 322, 436, 105, 299, 1730, 1720, 318, 1765, 72, 1675, 403, 352, 3548, 348, 1629, 422, 1619, 344, 863, 382, 1673, 76, 1457, 421, 1620, 2403, 3305, 1729]}
+Selected IDs:
+ {'IDs': [1618, 1718, 306, 354, 109, 338, 1738, 2188, 1621, 1733, 415, 376, 2397, 341, 1700, 355, 2407, 106, 80, 426, 430, 392, 41, 405, 1659, 31, 59, 387, 345, 1647, 414, 100, 75, 1670, 2143, 1742, 65, 1660, 322, 436, 105, 299, 1730, 1720, 318, 1765, 72, 1675, 403, 352, 3548, 348, 1629, 422, 1619, 344, 863, 382, 1673, 76, 1457, 421, 1620, 2403, 3305, 1729]}

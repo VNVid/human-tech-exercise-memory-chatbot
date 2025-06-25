@@ -1,0 +1,34 @@
+
+
+ Raw
+ Think: 
+To determine if the user's last message should trigger an exercise recommendation, I need to analyze the content of the message. The user is asking about building strength in their upper arms and shoulders, which suggests they are looking for exercises that target these specific muscle groups.
+
+I will check if the user's message contains any keywords that are related to exercise or physical activity. 
+
+The user's message contains the phrase "build strength", which is a clear indication that they are looking for exercises.
+
+Since the user's message is related to exercise, I will proceed to build a search query over the database to find suitable exercises.
+
+To build the search query, I need to identify the relevant columns and values from the user's message. In this case, the relevant columns are "bodyPart" and "target", and the values are "upper arms" and "shoulders".
+
+Here is the search query that I will use to find suitable exercises:
+
+Action: {"chat": false,
+         "search parameters": {"bodyPart": ["upper arms", "shoulders"],
+                               "target": ["biceps", "delts", "triceps"]}}
+Note: I have assumed that "upper arms" corresponds to "biceps" and "triceps", and "shoulders" corresponds to "delts". This is a reasonable assumption based on common exercise knowledge.
+
+However, I will make a more accurate search query, since "upper arms" is not a direct match for any of the allowed values in the "target" column. 
+
+Instead, I will use "upper arms" as a match for "upper arms" in the "bodyPart" column, and "shoulders" as a match for "delts" in the "target" column.
+
+Action: {"chat": false,
+         "search parameters": {"bodyPart": ["upper arms"],
+                               "target": ["delts"]}} 
+
+
+
+ Action
+ {'chat': True} 
+

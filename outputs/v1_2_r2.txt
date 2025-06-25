@@ -1,0 +1,64 @@
+
+
+ Raw
+ Think: 
+To determine if the user's last message should trigger an exercise recommendation, I need to analyze the content of the message. The user is asking about building strength in their upper arms and shoulders, which suggests they are looking for exercises that target these specific areas.
+
+To decide if an exercise recommendation is needed, I will check if the user's message contains any keywords that are related to exercise or fitness. 
+
+The user's message contains the words "build strength", "upper arms", and "shoulders", which are all relevant to exercise and fitness.
+
+Based on this analysis, I conclude that the user's last message should trigger an exercise recommendation.
+
+Action:
+{"chat": false,
+ "search parameters": {"target": ["biceps", "delts"], "bodyPart": ["upper arms", "shoulders"]}} 
+
+
+
+ Action
+ {'chat': False, 'search parameters': {'target': ['biceps', 'delts'], 'bodyPart': ['upper arms', 'shoulders']}} 
+
+Selection raw:
+ Here is a Python solution for the problem:
+
+```python
+import re
+
+def select_exercises(chat_history, last_user_message, exercises):
+    # Extract the body parts from the last user message
+    body_parts = re.findall(r'\b\w+\b', last_user_message.lower())
+    body_parts = [part for part in body_parts if part in ['upper arms', 'shoulders']]
+
+    # Filter exercises based on the extracted body parts
+    filtered_exercises = [exercise for exercise in exercises if exercise['bodyPart'] in body_parts]
+
+    # If the user asked for a specific number of exercises, extract it
+    match = re.search(r'\d+', last_user_message)
+    if match:
+        num_exercises = int(match.group())
+        return {"IDs": [exercise['id'] for exercise in filtered_exercises[:num_exercises]]}
+    else:
+        # Otherwise, return up to 10 exercises
+        return {"IDs": [exercise['id'] for exercise in filtered_exercises[:10]]}
+
+# Test the function
+chat_history = [
+    {
+        "role": "user",
+        "content": "How can I build strength in my upper arms and shoulders?"
+    }
+]
+last_user_message = "How can I build strength in my upper arms and shoulders?"
+exercises = [
+    # ... (insert exercises here)
+]
+
+print(select_exercises(chat_history, last_user_message, exercises))
+```
+
+This function first extracts the body parts from the last user message using regular expressions. It then filters the exercises based on these body parts. If the user asked for a specific number of exercises, it extracts this number and returns the corresponding exercises. Otherwise, it returns up to 10 exercises.
+
+Note that this function assumes that the user's message is in the format "How can I build strength in my [body part 1] and [body part 2]?" and that the body parts are "upper arms" and "shoulders". If the user's message is in a different format, you may need to modify the function accordingly.
+Selected IDs:
+ {'IDs': []}
