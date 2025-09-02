@@ -16,7 +16,7 @@ OLLAMA_URL = "https://ollama.kube.isc.heia-fr.ch"
 
 # 2
 MODEL_NAME = "hugging-quants/Meta-Llama-3.1-8B-Instruct-GPTQ-INT4"
-# "http://llama3.kube-ext.isc.heia-fr.ch/v1/"
+# "http://llama3.kube-ext.isc.heia-fr.ch/v1"
 OPENAI_BASE_URL = "http://localhost:8000/v1/"
 OPENAI_API_KEY = "-"
 
@@ -28,7 +28,7 @@ OPENAI_API_KEY = "-"
 USE_IMAGES = True
 
 # Enable thoughts in chat or show responses only
-STREAM_THOUGHTS = False
+STREAM_THOUGHTS = True
 # -------------------------------------------------------------------------
 
 # Prompt versions
@@ -37,7 +37,7 @@ if USE_IMAGES:
 else:
     SYSTEM_PROMPT_VERSION = "v2"
 EXTRACT_PREF_PROMPT_VERSION = "v2.2"
-MERGE_PREF_PROMPT_VERSION = "v4.2"  # 4.2 the only working one
+MERGE_PREF_PROMPT_VERSION = "v4.2"
 PICTURE_AGENT_SEARCH_PROMPT_VERSION = "v2.1"
 PICTURE_AGENT_SELECT_PROMPT_VERSION = "v2.1"
 

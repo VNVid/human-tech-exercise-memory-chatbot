@@ -54,14 +54,10 @@ def init_chat_history(user_info: dict):
 def reset_chat_history(user_info: dict):
     global chat_history
 
-    # TO-DO: save chat history
-
     chat_history.clear()
     part_chat_history.clear()
 
     logger = None
-
-    picture_agent.clear_state()
 
 
 def merge_system_messages(chat_history: List[BaseMessage]) -> List[BaseMessage]:
@@ -390,8 +386,6 @@ def stream_chat_messages(user_msg: str, user_info: dict):
     if USE_IMAGES:
         text_resp, img_ids = split_llm_sections(response)
 
-        # print("TEXT PARSED\n", text_resp, "\n")
-        # print("IMAGES PARSED\n", img_ids, "\n")
     else:
         text_resp, img_ids = response, []
 

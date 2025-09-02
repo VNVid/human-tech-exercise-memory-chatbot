@@ -59,7 +59,6 @@ def reset_chat_history(user_info: dict):
 
     logger = None
 
-    picture_agent.clear_state()
 
 
 def merge_system_messages(chat_history: List[BaseMessage]) -> List[BaseMessage]:

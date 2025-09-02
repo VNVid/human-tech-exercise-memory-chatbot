@@ -1,6 +1,7 @@
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import BaseMessage
-from config import OPENAI_API_KEY, OPENAI_BASE_URL, MODEL_NAME, MODEL_TEMPERATURE
+#from user_study_config import OPENAI_API_KEY, OPENAI_BASE_URL, MODEL_NAME, MODEL_TEMPERATURE
+from config_tmp import OPENAI_API_KEY, OPENAI_BASE_URL, MODEL_NAME, MODEL_TEMPERATURE
 from llm.base import BaseLLM
 
 

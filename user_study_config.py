@@ -25,20 +25,20 @@ OPENAI_API_KEY = "-"
 
 # Chatbot modality mode
 # LegBot
-USE_IMAGES, STREAM_THOUGHTS = False, False
+#USE_IMAGES, STREAM_THOUGHTS = False, False
 
 # ArmBot
 #USE_IMAGES, STREAM_THOUGHTS = True, False
 
 # TorsoBot
-# USE_IMAGES, STREAM_THOUGHTS = True, True
+USE_IMAGES, STREAM_THOUGHTS = True, True
 
 # -------------------------------------------------------------------------
 
 # Prompt versions
 SYSTEM_PROMPT_VERSION = "v4"
 EXTRACT_PREF_PROMPT_VERSION = "v2.2"
-MERGE_PREF_PROMPT_VERSION = "v4.2"  # 4.2 the only working one
+MERGE_PREF_PROMPT_VERSION = "v4.2"
 PICTURE_AGENT_SEARCH_PROMPT_VERSION = "v2.1"
 PICTURE_AGENT_SELECT_PROMPT_VERSION = "v2.1"
 

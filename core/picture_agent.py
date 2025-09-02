@@ -13,13 +13,13 @@ class PictureAgent:
     """
     A 2-step ReAct-style agent (no loops):
 
-     1) Decide if the user is asking for exercises, and if so
+     1) Decide if the user is asking for exercises and if so,
         return Dict with search parameters:
         Action: {"chat": false,
                  "search parameters": {...}}
-        Otherwise short-circuit to {"chat": true}.
+        Otherwise, returns {"chat": true}.
 
-     2) Given the Observation (list of rows resulted from search),
+     2) Given the list of rows resulted from search,
         pick the best N exercises and return their IDs.
     """
 
@@ -28,15 +28,8 @@ class PictureAgent:
         self.db = ExerciseDB()
         self.prompt_mgr = PromptManager()
 
-        self.last_ids: List[int] = []
-        self.session_ids: List[List[int]] = []
-
         # pre‐load column‐value lists for the search prompt
         self._search_listings = self.db.all_values()
-
-    def clear_state(self):
-        self.last_ids = []
-        self.session_ids = []
 
     def _parse_action(self, raw: str, only_json: bool = False) -> Optional[Dict]:
         """
@@ -79,6 +72,18 @@ class PictureAgent:
             return None
 
     def decide_on_search(self, chat_history: List[BaseMessage], last_user_message: str) -> Dict:
+        """
+        Decide whether to trigger the search tool and, if so, build its parameters.
+
+        Args:
+            chat_history: List of past conversation messages.
+            last_user_message: Latest user input.
+
+        Returns:
+            Dict with either:
+              {"chat": True} if no search is needed, or
+              {"chat": False, "search parameters": {...}} for DB lookup.
+        """
         # Grab a short window of the last few messages for context, filtering out SystemMessage entries.
         chat_context = []
         for msg in chat_history[-4:]:
@@ -134,8 +139,17 @@ class PictureAgent:
     def select_exercises(self, chat_history: List[BaseMessage], last_user_message: str,
                          matching_rows, default_set_size: int = 10, max_rows_num: int = 80) -> Dict:
         """
-        From matching_rows (a DataFrame of candidate exercises),
-        pick the most suitable subset and return the list of IDs.
+        Select the most relevant subset of exercises from candidate rows.
+
+        Args:
+            chat_history: List of past conversation messages.
+            last_user_message: Latest user input.
+            matching_rows: Candidate exercises as a DataFrame.
+            default_set_size: Default number of exercises to select.
+            max_rows_num: Maximum number of rows to pass into the prompt.
+
+        Returns:
+            Dict of the form {"IDs": [int, ...]} with selected exercise IDs.
         """
 
         # Grab a short window of the last few messages for context, filtering out SystemMessage entries.
@@ -212,8 +226,14 @@ class PictureAgent:
 
     def process(self, chat_history: List[BaseMessage], last_user_message: str) -> List[int]:
         """
-        Run the 2-step agent. Returns {"chat": bool, "IDs": [...]}
-        and sets self.last_ids.
+        Run the 2-step agent: decide on search and select exercises.
+
+        Args:
+            chat_history: List of past conversation messages.
+            last_user_message: Latest user input.
+
+        Returns:
+            List of selected exercise IDs or [] if no search is triggered.
         """
 
         action = self.decide_on_search(chat_history, last_user_message)
@@ -225,8 +245,6 @@ class PictureAgent:
         # Run the DB search tool
         params = action.get("search parameters", {})
         matching_rows = self.db.get_rows_by_dict(params)
-
-        matching_rows.to_csv("filename.csv", index=False)  # ____    DELETE
 
         selected_exercises = self.select_exercises(
             chat_history, last_user_message, matching_rows)
